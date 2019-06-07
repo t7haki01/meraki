@@ -1,0 +1,14 @@
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+
+.no-border {
+    border: 0;
+    box-shadow: none;
+}
+
+.resize-box{
+    min-width: 1em;
+}
+
+.resize-item{
+    padding: .15rem .8rem;
+}

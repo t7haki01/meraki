@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        
+        <ul>
+          <li *ngFor="let datum of data" >
+            -- {{datum.apMac}}
+            -- {{datum.clientMac}}
+            -- {{datum.lat}}, {{datum.lng}}
+            -- {{datum.manufacturer}}
+            -- {{datum.seenTime}}
+          </li>
+        </ul> 
+
+
+
+      </div>
+      <div class="col-md-3">
+        <app-guide></app-guide>
+      </div>
+    </div>
+  </div>
+  

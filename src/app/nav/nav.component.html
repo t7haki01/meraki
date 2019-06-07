@@ -1,0 +1,31 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" rotuerLink="/"> {{appTitle}} </a>
+          <div class="nav-item dropdown" class="nav-item dropdown" data-toggle="collapse" 
+               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <div ngbDropdown class="d-inline-block">
+                <button class="navbar-toggler no-border" id="dropdownMenu1" ngbDropdownToggle>
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div ngbDropdownMenu class="dropdown-menu resize-box" aria-labelledby="dropdownMenu1">
+                  <a class="dropdown-item text-uppercase resize-item" routerLink="/">home</a>
+                  <a class="dropdown-item text-uppercase resize-item" routerLink="/{{route1}}">{{ route1 }}</a>
+                  <a class="dropdown-item text-uppercase resize-item" routerLink="/{{route3}}">{{ route3 }}</a>
+                </div>
+              </div>
+            </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-uppercase" routerLink="/">home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-uppercase" routerLink="/{{route1}}">{{ route1 }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-uppercase" routerLink="/{{route3}}">{{ route3 }}</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  </header>
