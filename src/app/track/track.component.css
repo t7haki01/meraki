@@ -1,1 +1,9 @@
 @import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
+
+.top-margin{
+    margin-top: 2.5em;
+}
+
+.resize-input{
+    width: 3em;
+}

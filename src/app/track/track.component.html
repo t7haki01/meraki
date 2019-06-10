@@ -1,19 +1,34 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-      <div class="col-md-9">
-        
-        <ul>
-          <li *ngFor="let datum of data" >
-            -- {{datum.apMac}}
-            -- {{datum.clientMac}}
-            -- {{datum.lat}}, {{datum.lng}}
-            -- {{datum.manufacturer}}
-            -- {{datum.seenTime}}
-          </li>
-        </ul> 
-
-
-
+      <div class="col-md-9 top-margin">
+        <div *ngIf="!trackClicked" class="row">
+          <div class="input-group">
+            <div class="col-1">
+              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac1">
+            </div>
+            <div class="col">
+              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac2">
+            </div>
+            <div class="col">
+              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac3">
+            </div>
+            <div class="col">
+              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac4">
+            </div>
+            <div class="col">
+              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac5">
+            </div>
+            <div class="col">
+              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac6">
+            </div>
+            <div class="col">
+              <button class="btn" (click)="goTrack()" id="btn">Track</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="trackClicked">
+          <app-track-map></app-track-map>
+        </div>
       </div>
       <div class="col-md-3">
         <app-guide></app-guide>

@@ -9,14 +9,17 @@ import setting from '../assets/settings.js';
 })
 export class DataService {
 
-  urlGetByMac = setting.apiUrl.getByMac;
+  apiUrl = setting.apiUrl;
 
   constructor(
     private http: HttpClient
   ) { }
 
   getByMac(mac: string): Observable<Object>{
-    return this.http.get(this.urlGetByMac + mac);
+    return this.http.get(this.apiUrl.get + mac);
+  }
+  getRecent(): Observable<Object>{
+    return this.http.get(this.apiUrl.get);
   }
 
 }

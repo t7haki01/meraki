@@ -10,6 +10,9 @@ import { AboutComponent } from './about/about.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GuideModalComponent } from './guide-modal/guide-modal.component';
 import { TrackComponent } from './track/track.component';
+import { TrackMapComponent } from './track-map/track-map.component';
+import { MapComponent } from './map/map.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -18,10 +21,14 @@ import { TrackComponent } from './track/track.component';
     NavComponent,
     AboutComponent,
     GuideModalComponent,
-    TrackComponent
+    TrackComponent,
+    TrackMapComponent,
+    MapComponent,
+    HomeComponent,
   ],
   entryComponents:[
     GuideModalComponent,
+    TrackMapComponent
   ],
   imports: [
     BrowserModule,
