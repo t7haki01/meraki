@@ -1,10 +1,15 @@
-
-<p>track map works!</p>
-<div *ngFor="let datum of data">
-  <div>
-    {{datum.clientMac}}
+<div>
+  <h1>Located by Meraki with Mac Address in Sote Campus</h1>
+  <br>
+  <div style="width:1650px; height:700px;">
+      <div style="width:750px; display:inline-block; margin-right: 40px;">
+          <div id="trackMap1" style="width:680px;height:650px;"></div>
+      </div>
+      <div style="width:750px; display:inline-block;">
+          <div id="trackMap2" style="width:680px;height:650px;"></div>
+      </div>
   </div>
   <div>
-    {{datum.seenTime}}
+      <div id="trackMap3" style="margin-bottom: 50px; position:relative;width:620px;height:620px;"></div>
   </div>
 </div>

@@ -13,6 +13,7 @@ import { TrackComponent } from './track/track.component';
 import { TrackMapComponent } from './track-map/track-map.component';
 import { MapComponent } from './map/map.component';
 import { HomeComponent } from './home/home.component';
+import { BingMapPComponent } from './bing-map-p/bing-map-p.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HomeComponent } from './home/home.component';
     TrackMapComponent,
     MapComponent,
     HomeComponent,
+    BingMapPComponent,
   ],
   entryComponents:[
     GuideModalComponent,

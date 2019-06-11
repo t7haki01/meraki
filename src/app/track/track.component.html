@@ -26,12 +26,12 @@
             </div>
           </div>
         </div>
-        <div *ngIf="trackClicked">
-          <app-track-map></app-track-map>
+        <div *ngIf="trackClicked && mapReady">
+          <app-track-map [clientMac] = "clientMac"></app-track-map>
         </div>
       </div>
       <div class="col-md-3">
-        <app-guide></app-guide>
+        <app-guide *ngIf="guideOn"></app-guide>
       </div>
     </div>
   </div>

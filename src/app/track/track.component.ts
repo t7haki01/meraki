@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { TrackMapComponent } from '../track-map/track-map.component';
-
+import { MapLoaderService } from '../map-loader.service';
 
 @Component({
   selector: 'app-track',
@@ -10,23 +10,24 @@ import { TrackMapComponent } from '../track-map/track-map.component';
 })
 export class TrackComponent implements OnInit {
 
+  private guideOn: boolean = true;
   private data: any = [];
   private trackClicked: boolean = false;
+  private mapReady;
+  clientMac;
 
   constructor(
     private dataService: DataService,
     private trackMapComponent: TrackMapComponent,
-  ) {}
-
-  ngOnInit() {
-    // this.get();
+  ) 
+  {
+    MapLoaderService.load().then( res => {
+      console.log('BingmapLoader.load.then ', res);
+      this.mapReady = true;
+    })
   }
 
-  get(): void{
-    this.dataService.getByMac("\"f4:f1:5a:bc:8f:fd\"").subscribe((res)=>{
-      console.log(res);
-      this.data = res;
-    });
+  ngOnInit() {
   }
 
   inputControl(){
@@ -52,8 +53,28 @@ export class TrackComponent implements OnInit {
   }
 
   goTrack(){
-    this.trackMapComponent.clientMac = "\"f4:f1:5a:bc:8f:fd\"";
-    this.trackClicked = true;
+    var macAddress = "\"", lenCheck="";
+    for(var i = 1; i<7;i++){
+      var idTag = "mac"+i;
+      if(i!==6){
+        macAddress +=(<HTMLInputElement>document.getElementById(idTag)).value + ":";
+      }
+      else{
+        macAddress += (<HTMLInputElement>document.getElementById(idTag)).value;
+      }
+      lenCheck += (<HTMLInputElement>document.getElementById(idTag)).value;	
+    }
+    
+    macAddress += "\"";
+    
+    if(lenCheck.length<12){
+        window.alert("Given Mac address length is wrong");                    
+    }
+    else{
+      this.clientMac = macAddress;
+      this.trackClicked = true;
+      this.guideOn = false;
+    }
   }
 
 }
