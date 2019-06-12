@@ -1,26 +1,29 @@
+import setting from '../assets/settings.js';
+
+const apiKey = setting.bing.apiKey;
 
 export default class BingMap{
-    // bounds;
-    // options;
-    // element;
-    // imgSrc;
   
     constructor(
       bounds,
-      options,
       element,
       imgSrc,
+      center
     )
     {
-      this.bounds = bounds;
-      this.options = options;
+      this.bounds = [ new Microsoft.Maps.Location(bounds[0], bounds[1]), new Microsoft.Maps.Location(bounds[2], bounds[3]) ];
       this.element = element;
       this.imgSrc = imgSrc;
+      this.center = center;
     }
   
     getBingMap(){
   
-      var map = new Microsoft.Maps.Map(this.element, this.options);
+      var map = new Microsoft.Maps.Map(this.element, {
+        center: new Microsoft.Maps.Location(this.center[0], this.center[1]),
+        credentials: apiKey,
+        zoom: 18
+      });
       var img;
       // Define custom constructor for the overlay 
       function TopographicOverlay(bounds, image) {
@@ -68,5 +71,169 @@ export default class BingMap{
       return map;
   
     }
+
+    heatMaps(data, map1){
+      Microsoft.Maps.loadModule('Microsoft.Maps.HeatMap', function () {
+        // Creating sample Pushpin data within map view
+          /* locations can be the mix of Location and WeightedLocation */
+        var locations1 = []; 
+        for (var i = 0; i < data.length; i++) {
+          locations.push(map.tryPixelToLocation(
+            new Microsoft.Maps.Point(parseFloat(data[i].lat), parseFloat(data[i].lng)), 
+            Microsoft.Maps.PixelReference.control)); 
+        }
+        //   for (i = 0; i < data.length; i++) {
+        //   locations1.push(map.tryPixelToLocation(
+        //                           new Microsoft.Maps.Point(mapDiv.clientWidth * Math.random(), mapDiv.clientHeight * Math.random()), 
+        //                           Microsoft.Maps.PixelReference.control)); 
+        // }
+        var heatMap = new Microsoft.Maps.HeatMapLayer(locations1);
+        map1.layers.insert(heatMap);
+      });
+    }
+
+    pushPins(data, polyLine, map1, map2, map3){
+
+      var polyArray1 = [];
+      var polyArray2 = [];
+      var polyArray3 = [];
   
+      for(var i = 0; i < data.length; i++){
+        if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
+            var loc = new Microsoft.Maps.Location(
+            parseFloat(data[i].lat), parseFloat(data[i].lng));
+            var pin = new Microsoft.Maps.Pushpin(loc);
+            
+            if(data[i].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || data[i].apFloors == "[\"Kontinkangas-Honka-1krs\"]" 
+                || data[i].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"){
+                if(map1){
+                  map1.entities.push(pin);
+                }
+                if(polyLine){
+                  polyArray1.push(loc);
+                }
+            }
+            else if(data[i].apFloors == "[\"Kontinkangas-Paasi-2krs\"]" || data[i].apFloors == "[\"Kontinkangas-Louhi-2krs\"]"){
+              if(map2){
+                map2.entities.push(pin);
+              }
+                if(polyLine){
+                  polyArray2.push(loc);
+                }
+            }
+            else if(data[i].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
+              if(map3){
+                map3.entities.push(pin);
+              }
+                if(polyLine){
+                  polyArray3.push(loc);
+                }
+            }
+            else if (data[i].apFloors == "[]"){
+              if(map1){
+                map1.entities.push(pin);                    
+              }
+                if(polyLine){
+                  polyArray1.push(loc);
+                }
+            }
+        }
+      }
+      if(polyLine){
+        var polyline1 = new Microsoft.Maps.Polyline(polyArray1, null);
+        var polyline2 = new Microsoft.Maps.Polyline(polyArray2, null);
+        var polyline3 = new Microsoft.Maps.Polyline(polyArray3, null);
+        map1.entities.push(polyline1);
+        map2.entities.push(polyline2);
+        map3.entities.push(polyline3);
+      }
+
   }
+  getBingMapTileLvl(){
+    return GetMap(this.bounds, this.element, this.center, this.imgSrc);
+  }
+
+
+
+
+}//end of Bingmap class
+
+
+
+// var mapTile;
+
+function GetMap(bound, el, center, imgSrc) {
+    var bounds = Microsoft.Maps.LocationRect.fromCorners(bound[0], bound[1]);
+    var options = {
+      center: new Microsoft.Maps.Location(center[0], center[1]),
+      credentials: apiKey,
+      zoom: 18,
+      bounds: bounds
+    }
+    var map = new Microsoft.Maps.Map(el, options);
+    //Load the spatial math module which provides useful tile math calculations.    
+    Microsoft.Maps.loadModule('Microsoft.Maps.SpatialMath', function () {
+        var layer = new ImageOverlayLayer(map, imgSrc, bounds, options);
+    });
+
+    return map;
+}
+    var ImageOverlayLayer = function (map, imageUrl, bounds, options) {
+        var map = map;
+        var tileLayer;
+        var img;
+        function loadLayer() {
+            var self = this;
+            //Pre-load the image befor ecreating a tile layer.
+            img = new Image();
+            //Since the image is hosted on a different domain, use CORs. Remove this if the image is locally hosted.
+            img.crossOrigin = 'Anonymous';
+            //When the image has loaded, create a tile layer and add it to the map.
+            img.onload = function () {
+                tileLayer = new Microsoft.Maps.TileLayer({
+                    mercator: new Microsoft.Maps.TileSource({
+                        uriConstructor: getTilePath
+                    })
+                });
+                map.layers.insert(tileLayer);
+            };
+            img.src = imageUrl;
+        }
+        function getTilePath(tile) {
+            var pix = 256;
+            //Create an off screen canvas.
+            var canvas = document.createElement('canvas');
+            canvas.width = pix;
+            canvas.height = pix;
+            var context = canvas.getContext('2d');
+            
+            //Calculate the extents of the image bounds based on the current zoom level of the tile. 
+            var topRightImgPixels = Microsoft.Maps.SpatialMath.Tiles.locationToGlobalPixel(bounds.getNorthwest(), tile.zoom);
+            var bottomLeftImgPixels = Microsoft.Maps.SpatialMath.Tiles.locationToGlobalPixel(bounds.getSoutheast(), tile.zoom);
+            //Calculate the dimensions of the image at the tiles zoom level. 
+            var width = bottomLeftImgPixels.x - topRightImgPixels.x;
+            var height = bottomLeftImgPixels.y - topRightImgPixels.y;
+            //Calculate the offset of the top left corner of the image relative to the top left corner of the tile in pixels at zoom.
+            var x = topRightImgPixels.x - tile.x * pix;
+            var y = topRightImgPixels.y - tile.y * pix;
+            //Draw the image on the off screen canvas.
+            context.drawImage(img, x, y, width, height);
+            //Generate a data URL for the off screen canvas.
+            return canvas.toDataURL();
+        }
+        this.dispose = function () {
+            if (tileLayer) {
+                map.layers.remove(tileLayer);
+                tileLayer = null;
+                img = null;
+            }
+        };
+        this.getBaseTileLayer = function () {
+            return tileLayer;
+        };
+        this.setOptions = function (options) {
+            tileLayer.setOptions(options);
+        };
+        loadLayer();
+        map.setView({zoom: options.zoom,});
+    };

@@ -14,6 +14,8 @@ import { TrackMapComponent } from './track-map/track-map.component';
 import { MapComponent } from './map/map.component';
 import { HomeComponent } from './home/home.component';
 import { BingMapPComponent } from './bing-map-p/bing-map-p.component';
+import { HeatComponent } from './heat/heat.component';
+import { HeatMapComponent } from './heat-map/heat-map.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { BingMapPComponent } from './bing-map-p/bing-map-p.component';
     MapComponent,
     HomeComponent,
     BingMapPComponent,
+    HeatComponent,
+    HeatMapComponent,
   ],
   entryComponents:[
     GuideModalComponent,
