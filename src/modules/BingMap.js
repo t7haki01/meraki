@@ -72,23 +72,65 @@ export default class BingMap{
   
     }
 
-    heatMaps(data, map1){
+    heatMaps(data, map1, map2, map3){
       Microsoft.Maps.loadModule('Microsoft.Maps.HeatMap', function () {
-        // Creating sample Pushpin data within map view
-          /* locations can be the mix of Location and WeightedLocation */
-        var locations1 = []; 
-        for (var i = 0; i < data.length; i++) {
-          locations.push(map.tryPixelToLocation(
-            new Microsoft.Maps.Point(parseFloat(data[i].lat), parseFloat(data[i].lng)), 
-            Microsoft.Maps.PixelReference.control)); 
+        var locations1 = [];
+        var locations2 = [];
+        var locations3 = [];
+        
+        for(var i = 0; i < data.length; i++){
+          if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
+              var loc = new Microsoft.Maps.Location(
+              parseFloat(data[i].lat), parseFloat(data[i].lng));
+              
+              if(data[i].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || data[i].apFloors == "[\"Kontinkangas-Honka-1krs\"]" 
+                  || data[i].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"){
+                  if(map1){
+                    locations1.push(loc);
+                  }
+              }
+              else if(data[i].apFloors == "[\"Kontinkangas-Paasi-2krs\"]" || data[i].apFloors == "[\"Kontinkangas-Louhi-2krs\"]"){
+                if(map2){
+                  locations2.push(loc);
+                }
+              }
+              else if(data[i].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
+                if(map3){
+                  locations3.push(loc);
+                }
+              }
+              else if (data[i].apFloors == "[]"){
+                if(map1){
+                  locations1.push(loc);
+                }5
+              }
+          }
         }
-        //   for (i = 0; i < data.length; i++) {
-        //   locations1.push(map.tryPixelToLocation(
-        //                           new Microsoft.Maps.Point(mapDiv.clientWidth * Math.random(), mapDiv.clientHeight * Math.random()), 
-        //                           Microsoft.Maps.PixelReference.control)); 
-        // }
-        var heatMap = new Microsoft.Maps.HeatMapLayer(locations1);
-        map1.layers.insert(heatMap);
+
+        var heatMapOptions = {
+          intensity: 0.65,
+          radius: 15,
+          /**  Posibble options more to set */
+          // drawOrder:-10, /**default: -2 */
+          // colorGradient: {
+          //   '0': 'Black',
+          //   '0.5': 'Aqua',
+          //   '1': 'White'
+          // },
+          // opacity: /** between 0 and 1, default 1,*/
+          // unit: "meters" /** or "pixels", default "pixels",*/
+          // visible: true/** Boolean, if the heatmap layer is visible or not,*/
+        }
+
+        var heatMap1 = new Microsoft.Maps.HeatMapLayer(locations1);
+        heatMap1.setOptions(heatMapOptions);
+        var heatMap2 = new Microsoft.Maps.HeatMapLayer(locations2);
+        heatMap2.setOptions(heatMapOptions);
+        var heatMap3 = new Microsoft.Maps.HeatMapLayer(locations3);
+        heatMap3.setOptions(heatMapOptions);
+        map1.layers.insert(heatMap1);
+        map2.layers.insert(heatMap2);
+        map3.layers.insert(heatMap3);
       });
     }
 
@@ -158,9 +200,6 @@ export default class BingMap{
 
 }//end of Bingmap class
 
-
-
-// var mapTile;
 
 function GetMap(bound, el, center, imgSrc) {
     var bounds = Microsoft.Maps.LocationRect.fromCorners(bound[0], bound[1]);

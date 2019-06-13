@@ -28,14 +28,12 @@ export class MapComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-  )
-  {}
+  ){}
 
   setData(){
     this.dataService.getRecent().subscribe((res)=>{
       this.data = res;
-      this.map1.heatMaps(this.data, this.bingMap1);
-      // this.map1.pushPins(this.data, false, this.bingMap1, this.bingMap2, this.bingMap3);
+      this.map1.pushPins(this.data, false, this.bingMap1, this.bingMap2, this.bingMap3);
     })
   }
  
@@ -73,11 +71,9 @@ export class MapComponent implements OnInit {
     this.map2 = new BingMap(bounds2, el2, this.imageSrc2, center2);
     this.map3 = new BingMap(bounds3, el3, this.imageSrc3, center3);
 
-
-    this.bingMap1 = this.map1.getBingMapTileLvl();
-    // this.bingMap1 = this.map1.getBingMap();
-    // this.bingMap2 = this.map2.getBingMap();
-    // this.bingMap3 = this.map3.getBingMap();
+    this.bingMap1 = this.map1.getBingMap();
+    this.bingMap2 = this.map2.getBingMap();
+    this.bingMap3 = this.map3.getBingMap();
     this.setData();
   }
 }
