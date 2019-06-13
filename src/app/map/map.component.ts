@@ -74,7 +74,7 @@ export class MapComponent implements OnInit {
     this.bingMap1 = this.map1.getBingMap();
     this.bingMap2 = this.map2.getBingMap();
     this.bingMap3 = this.map3.getBingMap();
-    this.setData();
+    // this.setData();
   }
 }
 

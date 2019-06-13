@@ -9,10 +9,12 @@ import { NgbActiveModal, } from '@ng-bootstrap/ng-bootstrap';
 export class GuideModalComponent{
   @Input() materials: Array<Object> = [];
   @Input() title: string;
+  @Input() target: string;
   constructor(public activeModal: NgbActiveModal) {}
   
-  setTitle(title:string){
+  setTitle(title:string, target:string){
     this.title = title;
+    this.target = target;
   }
 
   setMaterials( material:Object ){

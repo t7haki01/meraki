@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { TrackMapComponent } from '../track-map/track-map.component';
 import { MapLoaderService } from '../map-loader.service';
@@ -8,7 +8,7 @@ import { MapLoaderService } from '../map-loader.service';
   templateUrl: './track.component.html',
   styleUrls: ['./track.component.css']
 })
-export class TrackComponent implements OnInit {
+export class TrackComponent implements AfterViewInit{
 
   private guideOn: boolean = true;
   private data: any = [];
@@ -27,7 +27,8 @@ export class TrackComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  ngAfterViewInit(){
+    (<HTMLInputElement>document.getElementById("mac1")).focus();
   }
 
   inputControl(){

@@ -16,6 +16,7 @@ export class GuideComponent {
   openWinCmd() {
     const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
     modalRef.componentInstance.title = "How to get Mac Address, Windows 10, Command Prompt";
+    modalRef.componentInstance.target = "Windows 10, Home edition";
     modalRef.componentInstance.setMaterials({
       'img': "assets/img/win-cmd-from-search-1.jpg", 
       'description': "1. Search Command Prompt from Windows menu or Search",
@@ -33,6 +34,7 @@ export class GuideComponent {
   openWinControlP() {
     const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
     modalRef.componentInstance.title = "How to get Mac Address, Windows 10, Control Panel";
+    modalRef.componentInstance.target = "Windows 10, Home edition";
     modalRef.componentInstance.setMaterials({
       'img': "assets/img/win-controlp-1.jpg", 
       'description': "1. Search Control Panel from Windows menu or search",
@@ -55,11 +57,38 @@ export class GuideComponent {
     });
   }
 
+  openAndroidGalaxy() {
+    const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
+    modalRef.componentInstance.title = "How to get Mac Address, Android, Galaxy";
+    modalRef.componentInstance.target = "Android, Galaxy A6 2018";
+    modalRef.componentInstance.setMaterials({'img': "assets/img/android-home-galaxy.jpg", 'description': "1. Tap the \"Setting\" icon from home screen"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/android-setting-galaxy.jpg", 'description': "2. Swipe down to tap \"About phone\" to get information"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/android-about-galaxy.jpg", 'description': "3. Tap the \"Status\" among available options"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/android-status-galaxy.jpg", 'description': "4. Check the \"Wi-Fi MAC address\" among available options"});
+  }
+
+  openMacTerminal() {
+    const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
+    modalRef.componentInstance.title = "How to get Mac Address, MAC, Terminal";
+    modalRef.componentInstance.target = "Mac Mini";
+    modalRef.componentInstance.setMaterials({'img': "assets/img/mac-cmd-ifconfig-1.jpg", 'description': "1. Open terminal then write \"ifconfig\" "});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/mac-cmd-ifconfig-result-2.jpg", 'description': "2. Check the value of \"ether\" from available results"});
+  }
+  openMacSystemPreferences() {
+    const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
+    modalRef.componentInstance.title = "How to get Mac Address, MAC, System Preferences";
+    modalRef.componentInstance.target = "Mac Mini";
+    modalRef.componentInstance.setMaterials({'img': "assets/img/mac-system-preferences-1.jpg", 'description': "1. Open \"System Preferences...\" from the Apple menu at the top left of screen"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/mac-system-preferences-network-2.jpg", 'description': "2. Go to \"Network\" from \"Internet & Wireless\" section"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/mac-system-preferences-network-connected-3.jpg", 'description': "3. Check the \"Wi-Fi\" available options from left then go to \"Advanced..\" at the bottom right"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/mac-system-preferences-network-connected-hardware-result-4.jpg", 'description': "4. Go to \"Hardware\" from available options on the top then check the Mac Address"});
+  }
   open() {
     const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
     modalRef.componentInstance.title = "How to get Mac Address, Windows 10, Command Prompt";
+    modalRef.componentInstance.target = "Mac Mini";
     modalRef.componentInstance.setMaterials({'img': "assets/img/win-cmd-from-search-1.jpg", 'description': "1. Search Command Prompt from Windows menu or Search"});
     modalRef.componentInstance.setMaterials({'img': "assets/img/win-cmd-ipconfig-all-2.jpg", 'description': "2. Write \"ipconfig /all\" to get information"});
-    modalRef.componentInstance.setMaterials({'img': "assets/img/win-cmd-macAddress-result-3.jpg", 'description': "3. Check the \"Physical Address\" from result values"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/win-cmd-macAddress-result-3.jpg", 'description': "3. Go to \"Hardware\" from available options on the top then check the Mac Address"});
   }
 }

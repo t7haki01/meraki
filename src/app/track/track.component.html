@@ -2,24 +2,29 @@
     <div class="row">
       <div class="col-md-9 top-margin">
         <div *ngIf="!trackClicked" class="row">
-          <div class="input-group">
-            <div class="col-1">
-              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac1">
-            </div>
+          <div class="row">
             <div class="col">
-              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac2">
+              <h5>Track the device How it is located by meraki</h5>
             </div>
+          </div>
+          <div class="row input-group">
             <div class="col">
-              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac3">
-            </div>
+              <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac1" autocomplete="off">
+            </div>:
             <div class="col">
-              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac4">
-            </div>
+              <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac2" autocomplete="off">
+            </div>:
             <div class="col">
-              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac5">
-            </div>
+              <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac3" autocomplete="off">
+            </div>:
             <div class="col">
-              <input class="form-control" (keyup)="inputControl()" maxlength="2" id="mac6">
+              <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac4" autocomplete="off">
+            </div>:
+            <div class="col">
+              <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac5" autocomplete="off">
+            </div>:
+            <div class="col">
+              <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac6" autocomplete="off">
             </div>
             <div class="col">
               <button class="btn" (click)="goTrack()" id="btn">Track</button>
