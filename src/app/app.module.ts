@@ -16,6 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { BingMapPComponent } from './bing-map-p/bing-map-p.component';
 import { HeatComponent } from './heat/heat.component';
 import { HeatMapComponent } from './heat-map/heat-map.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { HeatMapComponent } from './heat-map/heat-map.component';
     BingMapPComponent,
     HeatComponent,
     HeatMapComponent,
+    LoaderComponent,
   ],
   entryComponents:[
     GuideModalComponent,

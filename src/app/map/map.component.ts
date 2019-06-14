@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+
 import setting from '../../assets/settings.js';
 import BingMap from '../../modules/BingMap.js';
+
+
 const Microsoft: any = null;
 
 @Component({
@@ -11,6 +14,9 @@ const Microsoft: any = null;
 })
 
 export class MapComponent implements OnInit {
+
+  loading: boolean = true;
+  status;
 
   map1;
   map2;
@@ -41,6 +47,7 @@ export class MapComponent implements OnInit {
     console.log("From map c, ngOnInit ", typeof Microsoft);
     if(typeof Microsoft !== 'undefined'){
       console.log('BingMapComponent.ngOnInit');
+      this.status = 'BingMapComponent.ngOnInit';
       this.getMap();
     }
   }
@@ -74,6 +81,7 @@ export class MapComponent implements OnInit {
     this.bingMap1 = this.map1.getBingMap();
     this.bingMap2 = this.map2.getBingMap();
     this.bingMap3 = this.map3.getBingMap();
+
     // this.setData();
   }
 }

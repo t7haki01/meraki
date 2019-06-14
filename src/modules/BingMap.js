@@ -16,7 +16,6 @@ export default class BingMap{
       this.imgSrc = imgSrc;
       this.center = center;
     }
-  
     getBingMap(){
   
       var map = new Microsoft.Maps.Map(this.element, {
@@ -24,6 +23,7 @@ export default class BingMap{
         credentials: apiKey,
         zoom: 18
       });
+
       var img;
       // Define custom constructor for the overlay 
       function TopographicOverlay(bounds, image) {
@@ -67,7 +67,7 @@ export default class BingMap{
             img.style.height = (bottomRight.y - topLeft.y) + 'px';
         }
       }
-  
+
       return map;
   
     }
