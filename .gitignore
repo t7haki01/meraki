@@ -47,5 +47,6 @@ Thumbs.db
 
 
 # Personalized gitignore
-package-lock.json
 /src/assets/settings.js
+/confidentials&settings/settings.json
+proxy.conf.json

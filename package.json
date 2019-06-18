@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --proxy-config proxy.config.json",
+    "build": "ng build && node index.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -22,9 +22,15 @@
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
     "@types/bingmaps": "0.0.1",
     "bingmaps": "^2.0.3",
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7",
+    "mysql": "^2.17.1",
     "ngx-bootstrap": "^4.2.0",
+    "path": "^0.12.7",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
@@ -50,7 +56,7 @@
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
   },
-  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.",
+  "description": "backend with ExpressJS, frontend with Angular",
   "main": "index.js",
   "repository": {
     "type": "git",
