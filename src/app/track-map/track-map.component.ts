@@ -24,9 +24,13 @@ export class TrackMapComponent implements OnInit {
   trackMap2;
   trackMap3;
 
-  imageSrc1 = 'assets/img/sote1_51_rotated.jpg';
-  imageSrc2 = 'assets/img/sote2_51_rotated.jpg';
-  imageSrc3 = 'assets/img/sote3_51_rotated.jpg';
+  @Input() imgSrc1;
+  @Input() imgSrc2;
+  @Input() imgSrc3;
+
+  // imageSrc1 = 'assets/img/sote1_51_rotated.jpg';
+  // imageSrc2 = 'assets/img/sote2_51_rotated.jpg';
+  // imageSrc3 = 'assets/img/sote3_51_rotated.jpg';
 
   apiKey = setting.bing.apiKey;
   
@@ -75,9 +79,12 @@ export class TrackMapComponent implements OnInit {
     var el2 = document.getElementById('trackMap2');
     var el3 = document.getElementById('trackMap3');
 
-    this.map1 = new BingMap(bounds1, el1, this.imageSrc1, [65.0086909, 25.5106079]);
-    this.map2 = new BingMap(bounds2, el2, this.imageSrc2, [65.0088109, 25.5105079]);
-    this.map3 = new BingMap(bounds3, el3, this.imageSrc3, [65.0086009, 25.5103000]);
+    // this.map1 = new BingMap(bounds1, el1, this.imageSrc1, [65.0086909, 25.5106079]);
+    // this.map2 = new BingMap(bounds2, el2, this.imageSrc2, [65.0088109, 25.5105079]);
+    // this.map3 = new BingMap(bounds3, el3, this.imageSrc3, [65.0086009, 25.5103000]);
+    this.map1 = new BingMap(bounds1, el1, this.imgSrc1, [65.0086909, 25.5106079]);
+    this.map2 = new BingMap(bounds2, el2, this.imgSrc2, [65.0088109, 25.5105079]);
+    this.map3 = new BingMap(bounds3, el3, this.imgSrc3, [65.0086009, 25.5103000]);
 
     this.trackMap1 = this.map1.getBingMapTileLvl();
     this.trackMap2 = this.map2.getBingMapTileLvl();

@@ -32,7 +32,7 @@
           </div>
         </div>
         <div *ngIf="trackClicked && mapReady">
-          <app-track-map [clientMac] = "clientMac"></app-track-map>
+          <app-map [clientMac]="clientMac" [imgSrc1]="imgSrc1" [imgSrc2]="imgSrc2" [imgSrc3]="imgSrc3" [isTileLvl]="isTileLvl" [type]="type"></app-map>
         </div>
       </div>
       <div class="col-md-3">

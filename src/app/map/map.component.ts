@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../data.service';
 
 import setting from '../../assets/settings.js';
@@ -26,9 +26,20 @@ export class MapComponent implements OnInit {
   bingMap2;
   bingMap3;
  
-  imageSrc1 = 'assets/img/sote1_51_rotated.jpg';
-  imageSrc2 = 'assets/img/sote2_51_rotated.jpg';
-  imageSrc3 = 'assets/img/sote3_51_rotated.jpg';
+  // imageSrc1 = 'assets/img/sote1_51_rotated.jpg';
+  // imageSrc2 = 'assets/img/sote2_51_rotated.jpg';
+  // imageSrc3 = 'assets/img/sote3_51_rotated.jpg';
+
+  @Input() imgSrc1;
+  @Input() imgSrc2;
+  @Input() imgSrc3;
+
+  @Input() clientMac : string;
+  @Input() type : string;
+
+  @Input() isTileLvl: boolean;
+
+
   apiKey = setting.bing.apiKey;
   private data: any = [];
 
@@ -37,14 +48,36 @@ export class MapComponent implements OnInit {
   ){}
 
   setData(){
-    this.dataService.getRecent().subscribe((res)=>{
-      this.data = res;
-      this.map1.pushPins(this.data, false, this.bingMap1, this.bingMap2, this.bingMap3);
-    })
+    if(this.clientMac && this.type === "track"){
+      this.dataService.getByMac(this.clientMac).subscribe((res)=>{
+        this.data = res;
+        if(this.data.length>0){
+          this.map1.pushPins(this.data, true, this.bingMap1, this.bingMap2, this.bingMap3);
+        }
+        else{
+          window.alert("No any trace found!");
+        }
+      });
+    }
+    else if(this.type === "basic"){
+      this.dataService.getRecent().subscribe((res)=>{
+        this.data = res;
+        this.map1.pushPins(this.data, false, this.bingMap1, this.bingMap2, this.bingMap3);
+      });
+    }
+
+    else if(this.type === "heat"){
+      this.dataService.getRecent().subscribe((res)=>{
+        this.data = res;
+        this.map1.heatMaps(this.data, this.bingMap1, this.bingMap2, this.bingMap3);
+      });
+    }
+
+
   }
  
   ngOnInit() {
-    console.log("From map c, ngOnInit ", typeof Microsoft);
+    console.log("From map component, ngOnInit and typeof Microsoft: ", typeof Microsoft);
     if(typeof Microsoft !== 'undefined'){
       console.log('BingMapComponent.ngOnInit');
       this.status = 'BingMapComponent.ngOnInit';
@@ -70,19 +103,29 @@ export class MapComponent implements OnInit {
     var center2 = [65.0088109, 25.5105079];
     var center3 = [65.0086009, 25.5103000];
 
-    var el1 = document.getElementById('myMap');
+    var el1 = document.getElementById('myMap1');
     var el2 = document.getElementById('myMap2');
     var el3 = document.getElementById('myMap3');
 
-    this.map1 = new BingMap(bounds1, el1, this.imageSrc1, center1);
-    this.map2 = new BingMap(bounds2, el2, this.imageSrc2, center2);
-    this.map3 = new BingMap(bounds3, el3, this.imageSrc3, center3);
+    // this.map1 = new BingMap(bounds1, el1, this.imageSrc1, center1);
+    // this.map2 = new BingMap(bounds2, el2, this.imageSrc2, center2);
+    // this.map3 = new BingMap(bounds3, el3, this.imageSrc3, center3);
+    this.map1 = new BingMap(bounds1, el1, this.imgSrc1, center1);
+    this.map2 = new BingMap(bounds2, el2, this.imgSrc2, center2);
+    this.map3 = new BingMap(bounds3, el3, this.imgSrc3, center3);
 
-    this.bingMap1 = this.map1.getBingMap();
-    this.bingMap2 = this.map2.getBingMap();
-    this.bingMap3 = this.map3.getBingMap();
+    if(this.isTileLvl){
+      this.bingMap1 = this.map1.getBingMapTileLvl();
+      this.bingMap2 = this.map2.getBingMapTileLvl();
+      this.bingMap3 = this.map3.getBingMapTileLvl();
+    }
+    else{
+      this.bingMap1 = this.map1.getBingMap();
+      this.bingMap2 = this.map2.getBingMap();
+      this.bingMap3 = this.map3.getBingMap();
+    }
 
-    // this.setData();
+    this.setData();
   }
 }
 

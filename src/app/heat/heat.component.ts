@@ -10,6 +10,13 @@ export class HeatComponent implements OnInit {
 
   mapReady = false;
 
+  imgSrc1 = 'assets/img/sote1_51_rotated_blued.jpg';
+  imgSrc2 = 'assets/img/sote2_51_rotated_blued.jpg';
+  imgSrc3 = 'assets/img/sote3_51_rotated_blued.jpg';
+
+  type:string = "heat";
+  isTileLvl: boolean = true;
+
   constructor(){
     MapLoaderService.load().then( res => {
       console.log('BingmapLoader.load.then ', res);

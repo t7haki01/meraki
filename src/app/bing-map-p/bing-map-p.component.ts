@@ -8,7 +8,14 @@ import { MapLoaderService } from "../map-loader.service";
 })
 export class BingMapPComponent implements OnInit {
 
-  mapReady = false;
+  mapReady:boolean = false;
+
+  type:string = 'basic';
+
+  imgSrc1 = 'assets/img/sote1_51_rotated.jpg';
+  imgSrc2 = 'assets/img/sote2_51_rotated.jpg';
+  imgSrc3 = 'assets/img/sote3_51_rotated.jpg';
+  isTileLvl: boolean = false;
 
   constructor() {
     MapLoaderService.load().then( res => {

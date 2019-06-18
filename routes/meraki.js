@@ -15,7 +15,7 @@ router.get('/all', function(req, res, next) {
     var dbo = db.db(mongoDb.dbName);
     let query = {};
 
-    dbo.collection(mongoDb.collectionName).find(query).toArray(function(err,result){
+    dbo.collection(mongoDb.collectionName).find(query).limist(100).toArray(function(err,result){
       if(err){
         console.log(err);
         throw err;
@@ -78,7 +78,32 @@ router.get('/:clientMac?', function(req, res, next){
         throw err;
       }
       var dbo = db.db(mongoDb.dbName);
-      var query = {clientMac: req.params.clientMac};
+      var query = {};
+
+      if(req.query.date){
+        let startTime = getDateForQuery(req.query.date, 0);
+        let endTime = getDateForQuery(req.query.date, 1);
+  
+        query = {
+            "seenTime" : {
+              $gte: startTime,
+              $lt: endTime,
+            },
+            clientMac: req.params.clientMac,
+        };
+      }
+      
+      else{
+        let startTime = getDateForQuery("", 0);
+        let endTime = getDateForQuery("", 1);
+        query = {
+          "seenTime" : {
+            $gte: startTime,
+            $lt: endTime,
+          },
+          clientMac: req.params.clientMac
+        };
+      }
       /**
         '-1' for descending order, 
         '1' for ascending order,

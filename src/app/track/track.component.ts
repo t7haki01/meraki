@@ -10,11 +10,18 @@ import { MapLoaderService } from '../map-loader.service';
 })
 export class TrackComponent implements AfterViewInit{
 
-  private guideOn: boolean = true;
-  private data: any = [];
-  private trackClicked: boolean = false;
-  private mapReady;
+  guideOn: boolean = true;
+  data: any = [];
+  trackClicked: boolean = false;
+  mapReady:boolean;
   clientMac;
+
+  type:string = "track";
+
+  imgSrc1 = 'assets/img/sote1_51_rotated.jpg';
+  imgSrc2 = 'assets/img/sote2_51_rotated.jpg';
+  imgSrc3 = 'assets/img/sote3_51_rotated.jpg';
+  isTileLvl: boolean = true;
 
   constructor(
     private dataService: DataService,
