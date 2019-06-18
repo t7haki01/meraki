@@ -1,0 +1,7 @@
+{
+    "route":{
+      "target": "url",
+      "secure": false,
+      "logLevel":"debug"
+    }
+}
