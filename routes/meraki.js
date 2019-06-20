@@ -114,6 +114,8 @@ router.get('/:clientMac?', function(req, res, next){
       // var sort = {'_id': -1};
       var sort = {'seenTime': 1};
 
+      console.log("clientMac requested" , " and ", query);
+
       dbo.collection(mongoDb.collectionName).find(query).sort(sort).toArray(function(err,result){
         if(err){
           console.log(err);
@@ -159,7 +161,7 @@ router.delete('/', function(req, res, next) {
     let query = {
       "seenTime":{
         $lt: aMonthAgo,
-        $gte: futureDate
+        // $gte: futureDate
       }
     };
     
@@ -168,7 +170,7 @@ router.delete('/', function(req, res, next) {
         console.log(err);
         throw err;
       }
-      console.log(obj);
+      console.log(obj.deletedCount + " deleted!");
       db.close();
     });
   });
@@ -202,7 +204,11 @@ function getTimestampAgo(delay){
 
 function getDateForQuery(givenTime, ending){
 
-  let timeInFormat = new Date(givenTime);
+  let timeInFormat = new Date();
+
+  if(givenTime){
+    timeInFormat = new Date(givenTime);
+  }
 
   let yr = timeInFormat.getFullYear();
 
@@ -221,5 +227,6 @@ function getDateForQuery(givenTime, ending){
   let sec = "00";
 
   let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
+  console.log(dateFormTimestamp, ", and ", givenTime, " type", typeof givenTime);
   return dateFormTimestamp;
 }
