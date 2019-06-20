@@ -148,35 +148,6 @@ router.get('/lastseen/:clientMac?', function(req, res, next){
     });
 });
 
-router.delete('/', function(req, res, next) {
-
-  MongoClient.connect(mongoDb.url, function(err, db){
-    if(err){
-      console.log(err);
-      throw err;
-    }
-    let aMonthAgo = getDateForQuery("",8);
-    let futureDate = getDateForQuery("",1);
-    var dbo = db.db(mongoDb.dbName);
-    let query = {
-      "seenTime":{
-        $lt: aMonthAgo,
-        // $gte: futureDate
-      }
-    };
-    
-    dbo.collection(mongoDb.collectionName).deleteMany(query, function(err, obj){
-      if(err){
-        console.log(err);
-        throw err;
-      }
-      console.log(obj.deletedCount + " deleted!");
-      db.close();
-    });
-  });
-});
-
-
 module.exports = router;
 
 function getTimestampAgo(delay){

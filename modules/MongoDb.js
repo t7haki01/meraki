@@ -113,7 +113,7 @@ module.exports = class MongoDb{
                 //Trimming time value from meraki server to sql datetime format
                 timeStamp = timeStamp.replace('\"','');
                 timeStamp = timeStamp.replace('\"','');
-		timeStamp = new Date(timeStamp).toIsoString();
+        		timeStamp = new Date(timeStamp).toIsoString();
 
 //                timeStamp = timeStamp.replace('T',' ');
 //                timeStamp = timeStamp.replace('Z','');
@@ -138,6 +138,34 @@ module.exports = class MongoDb{
         }//This is end of for loop
         return values;
     }
+
+    deleteAmonthOlder(){
+        let dbName = this.dbName;
+        let collectionName = this.collectionName;
+        let aMonthAgo = getDateForQuery(0,1,0,0);
+        let query ={
+            "seenTime":{
+              $lt: aMonthAgo,
+            }
+        };
+        MongoClient.connect(this.url, function(err, db){
+            if(err){
+                console.log(err);
+                throw err;
+            }
+            var dbo = db.db(dbName);
+            
+            dbo.collection(collectionName).deleteMany(query, function(err, obj){
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                console.log(obj.deletedCount + " deleted!");
+                db.close();
+            })
+
+        })//end of mongo Db connection
+    }    
 };//ending of MongoDb Class
 
 
@@ -158,4 +186,37 @@ Date.prototype.toIsoString = function() {
 	// Here for the possible to get difference between UTC and Local
         // dif + pad(tzo / 60) +
         // ':' + pad(tzo % 60);
+}
+
+
+function getDateForQuery(yrAgo, monAgo, dateAgo, hrAgo){
+
+    let timeInFormat = new Date();
+    
+    let yr = timeInFormat.getFullYear();
+    yr -= yrAgo;
+  
+    let mon = timeInFormat.getMonth() + 1;
+    mon =- monAgo; 
+  
+    if(mon<10){
+      mon = "0" + mon;
+    }
+  
+    let date = timeInFormat.getDate();
+    date -= dateAgo;
+  
+    let hr = timeInFormat.getHours();
+    hr -= hrAgo;
+    if(hr<10){
+        hr = "0" + hr;
+    }
+  
+    let min = "00";
+  
+    let sec = "00";
+  
+    let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
+    console.log("Older than " + dateFormTimestamp + " will be deleted");
+    return dateFormTimestamp;
 }

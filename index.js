@@ -61,6 +61,7 @@ app.post(route, function(req, res) {
         // Here was the part saving data from posting from meraki server
         //        mysqlDb.insertToDb(req.body);
         mongoDb.insertToCol(null, null, mongoDb.trimDataMongo(req.body));
+        mongoDb.deleteAmonthOlder();
     } 
     else {
 		console.log('Secret was invalid');
