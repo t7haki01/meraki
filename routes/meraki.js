@@ -15,7 +15,7 @@ router.get('/all', function(req, res, next) {
     var dbo = db.db(mongoDb.dbName);
     let query = {};
 
-    dbo.collection(mongoDb.collectionName).find(query).limist(100).toArray(function(err,result){
+    dbo.collection(mongoDb.collectionName).find(query).limit(100).toArray(function(err,result){
       if(err){
         console.log(err);
         throw err;
@@ -146,6 +146,31 @@ router.get('/lastseen/:clientMac?', function(req, res, next){
     });
 });
 
+router.delete('/', function(req, res, next) {
+
+  MongoClient.connect(mongoDb.url, function(err, db){
+    if(err){
+      console.log(err);
+      throw err;
+    }
+    let aMonthAgo = getDateAMonthAgo();
+    var dbo = db.db(mongoDb.dbName);
+    let query = {
+      "seenTime":{$lt: aMonthAgo}
+    };
+    
+    dbo.collection(mongoDb.collectionName).deleteMany(query, function(err, obj){
+      if(err){
+        console.log(err);
+        throw err;
+      }
+      console.log(obj);
+      db.close();
+    });
+  });
+});
+
+
 module.exports = router;
 
 function getTimestampAgo(delay){
@@ -192,5 +217,31 @@ function getDateForQuery(givenTime, ending){
   let sec = "00";
 
   let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
+  return dateFormTimestamp;
+}
+
+
+function getDateAMonthAgo(){
+
+  let cur = new Date();
+
+  let yr = cur.getFullYear();
+
+  let mon = cur.getMonth() - 1;
+
+  if(mon<10){
+    mon = "0" + mon;
+  }
+
+  let date = cur.getDate();
+
+  let hr = "00";
+
+  let min = "00";
+
+  let sec = "00";
+
+  let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
+  console.log(dateFormTimestamp);
   return dateFormTimestamp;
 }
