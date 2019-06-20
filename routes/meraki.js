@@ -197,7 +197,7 @@ function getDateForQuery(givenTime, ending){
 
   let sec = "00";
 
-  let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
-  console.log(dateFormTimestamp, ", and ", givenTime, " type", typeof givenTime);
+  let dateFormTimestamp = yr + "-" + mon + "-" + date + "T" + hr + ":" + min + ":" + sec + "Z";
+  
   return dateFormTimestamp;
 }
