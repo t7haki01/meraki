@@ -153,10 +153,14 @@ router.delete('/', function(req, res, next) {
       console.log(err);
       throw err;
     }
-    let aMonthAgo = getDateAMonthAgo();
+    let aMonthAgo = getDateForQuery("",8);
+    let futureDate = getDateForQuery("",1);
     var dbo = db.db(mongoDb.dbName);
     let query = {
-      "seenTime":{$lt: aMonthAgo}
+      "seenTime":{
+        $lt: aMonthAgo,
+        $gte: futureDate
+      }
     };
     
     dbo.collection(mongoDb.collectionName).deleteMany(query, function(err, obj){
@@ -217,31 +221,5 @@ function getDateForQuery(givenTime, ending){
   let sec = "00";
 
   let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
-  return dateFormTimestamp;
-}
-
-
-function getDateAMonthAgo(){
-
-  let cur = new Date();
-
-  let yr = cur.getFullYear();
-
-  let mon = cur.getMonth() - 1;
-
-  if(mon<10){
-    mon = "0" + mon;
-  }
-
-  let date = cur.getDate();
-
-  let hr = "00";
-
-  let min = "00";
-
-  let sec = "00";
-
-  let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
-  console.log(dateFormTimestamp);
   return dateFormTimestamp;
 }
