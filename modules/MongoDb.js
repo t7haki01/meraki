@@ -165,7 +165,35 @@ module.exports = class MongoDb{
             })
 
         })//end of mongo Db connection
-    }    
+    }
+    
+    deleteNonsense(){
+        let dbName = this.dbName;
+        let collectionName = this.collectionName;
+        let tomorrow = getDateForQuery(0,0,-1,0);
+        let query ={
+            "seenTime":{
+              $gte: aMonthAgo,
+            }
+        };
+        MongoClient.connect(this.url, function(err, db){
+            if(err){
+                console.log(err);
+                throw err;
+            }
+            var dbo = db.db(dbName);
+            
+            dbo.collection(collectionName).deleteMany(query, function(err, obj){
+                if(err){
+                    console.log(err);
+                    throw err;
+                }
+                console.log(obj.deletedCount + " deleted!");
+                db.close();
+            })
+
+        })//end of mongo Db connection
+    }
 };//ending of MongoDb Class
 
 
@@ -194,20 +222,20 @@ function getDateForQuery(yrAgo, monAgo, dateAgo, hrAgo){
     let timeInFormat = new Date();
     
     let yr = timeInFormat.getFullYear();
-    yr -= yrAgo;
+    yr = yr - yrAgo;
   
     let mon = timeInFormat.getMonth() + 1;
-    mon =- monAgo; 
+    mon = mon - monAgo; 
   
     if(mon<10){
       mon = "0" + mon;
     }
   
     let date = timeInFormat.getDate();
-    date -= dateAgo;
+    date = date - dateAgo;
   
     let hr = timeInFormat.getHours();
-    hr -= hrAgo;
+    hr = hr - hrAgo;
     if(hr<10){
         hr = "0" + hr;
     }
@@ -216,7 +244,7 @@ function getDateForQuery(yrAgo, monAgo, dateAgo, hrAgo){
   
     let sec = "00";
   
-    let dateFormTimestamp = yr + "-" + mon + "-" + date + " " + hr + ":" + min + ":" + sec;
+    let dateFormTimestamp = yr + "-" + mon + "-" + date + "T" + hr + ":" + min + ":" + sec + "Z";
     console.log("Older than " + dateFormTimestamp + " will be deleted");
     return dateFormTimestamp;
 }

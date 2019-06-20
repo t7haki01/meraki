@@ -53,18 +53,51 @@ app.get(route, function(req, res) {
     res.status(200).send(validator);
 });
 
+let nowInHr = new Date().getHours();
+let nowInDate = new Date().getDate();
+
 // Getting the flow of data every 1 to 2 minutes
 app.post(route, function(req, res) {
 	if (req.body.secret == secret) {
         console.log('Secret verified');
-    	console.log(req.body.data.observations.length + " " + ", raw data posted");
+        if(req.body.data.observations){
+            console.log(req.body.data.observations.length + " " + ", raw data posted");
+            mongoDb.insertToCol(null, null, mongoDb.trimDataMongo(req.body));
+            if(runOnceInAHour((new Date()).getHours())){
+                mongoDb.deleteAmonthOlder();
+            }
+            if(runOnceInADay((new Date()).getDate())){
+                mongoDb.deleteNonsense();
+            }
+        }
         // Here was the part saving data from posting from meraki server
         //        mysqlDb.insertToDb(req.body);
-        mongoDb.insertToCol(null, null, mongoDb.trimDataMongo(req.body));
-        mongoDb.deleteAmonthOlder();
     } 
     else {
+        console.log(req);
 		console.log('Secret was invalid');
 	}
 	res.status(200);
 });
+
+
+
+function runOnceInAHour(curHr){
+    if(curHr !== nowInHr){
+        nowInHr = curHr;
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function runOnceInADay(today){
+    if(today !== nowInDate){
+        nowInDate = today;
+        return true;
+    }
+    else{
+        return false;
+    }
+}
