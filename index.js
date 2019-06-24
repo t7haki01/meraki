@@ -63,9 +63,11 @@ app.post(route, function(req, res) {
         if(req.body.data.observations){
             console.log(req.body.data.observations.length + " " + ", raw data posted");
             mongoDb.insertToCol(null, null, mongoDb.trimDataMongo(req.body));
+
             if(runOnceInAHour((new Date()).getHours())){
                 mongoDb.deleteAmonthOlder();
             }
+
             if(runOnceInADay((new Date()).getDate())){
                 mongoDb.deleteNonsense();
             }
@@ -85,6 +87,7 @@ app.post(route, function(req, res) {
 function runOnceInAHour(curHr){
     if(curHr !== nowInHr){
         nowInHr = curHr;
+        console.log("Hourly deleting function performed");
         return true;
     }
     else{
@@ -95,6 +98,7 @@ function runOnceInAHour(curHr){
 function runOnceInADay(today){
     if(today !== nowInDate){
         nowInDate = today;
+        console.log("Daily deleting function performed");
         return true;
     }
     else{
