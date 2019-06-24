@@ -1,6 +1,9 @@
 import setting from '../assets/settings.js';
+import Loader from './Loader.js';
+
 
 const apiKey = setting.bing.apiKey;
+
 
 export default class BingMap{
   
@@ -15,9 +18,10 @@ export default class BingMap{
       this.element = element;
       this.imgSrc = imgSrc;
       this.center = center;
+      this.loader = Loader;
     }
     getBingMap(){
-  
+      this.loader.setReady(false);
       var map = new Microsoft.Maps.Map(this.element, {
         center: new Microsoft.Maps.Location(this.center[0], this.center[1]),
         credentials: apiKey,
@@ -25,6 +29,7 @@ export default class BingMap{
       });
 
       var img;
+      var loader = this.loader;
       // Define custom constructor for the overlay 
       function TopographicOverlay(bounds, image) {
         this.bounds = bounds;
@@ -66,6 +71,8 @@ export default class BingMap{
             img.style.width = (bottomRight.x - topLeft.x) + 'px';
             img.style.height = (bottomRight.y - topLeft.y) + 'px';
         }
+        loader.setReady(true);
+        console.log(loader.getReady());
       }
 
       return map;

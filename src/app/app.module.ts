@@ -10,12 +10,10 @@ import { AboutComponent } from './about/about.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GuideModalComponent } from './guide-modal/guide-modal.component';
 import { TrackComponent } from './track/track.component';
-import { TrackMapComponent } from './track-map/track-map.component';
 import { MapComponent } from './map/map.component';
 import { HomeComponent } from './home/home.component';
 import { BingMapPComponent } from './bing-map-p/bing-map-p.component';
 import { HeatComponent } from './heat/heat.component';
-import { HeatMapComponent } from './heat-map/heat-map.component';
 import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
@@ -26,17 +24,14 @@ import { LoaderComponent } from './loader/loader.component';
     AboutComponent,
     GuideModalComponent,
     TrackComponent,
-    TrackMapComponent,
     MapComponent,
     HomeComponent,
     BingMapPComponent,
     HeatComponent,
-    HeatMapComponent,
     LoaderComponent,
   ],
   entryComponents:[
     GuideModalComponent,
-    TrackMapComponent
   ],
   imports: [
     BrowserModule,

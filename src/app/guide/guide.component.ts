@@ -83,6 +83,15 @@ export class GuideComponent {
     modalRef.componentInstance.setMaterials({'img': "assets/img/mac-system-preferences-network-connected-3.jpg", 'description': "3. Check the \"Wi-Fi\" available options from left then go to \"Advanced..\" at the bottom right"});
     modalRef.componentInstance.setMaterials({'img': "assets/img/mac-system-preferences-network-connected-hardware-result-4.jpg", 'description': "4. Go to \"Hardware\" from available options on the top then check the Mac Address"});
   }
+  openIOSIphone() {
+    const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
+    modalRef.componentInstance.title = "How to get Mac Address, IOS, IPhone";
+    modalRef.componentInstance.target = "IPhone 5";
+    modalRef.componentInstance.setMaterials({'img': "assets/img/iphone-home-settings-1.jpg", 'description': "1. Open \"Settings\" from home screen"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/iphone-settings-general-2.jpg", 'description': "2. Go to \"General\" from available options"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/iphone-general-about-3.jpg", 'description': "3. Go to \"About\" from available options"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/iphone-about-result-4.jpg", 'description': "4. Scroll/Swipe down little to check \"Wi-Fi Address\" from available results"});
+  }
   open() {
     const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
     modalRef.componentInstance.title = "How to get Mac Address, Windows 10, Command Prompt";

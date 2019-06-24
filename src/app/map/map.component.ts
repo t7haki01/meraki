@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { DataService } from '../data.service';
+import { BingmapService } from '../bingmap.service';
 
 import setting from '../../assets/settings.js';
 import BingMap from '../../modules/BingMap.js';
 
+import Loader from '../../modules/Loader.js';
 
 const Microsoft: any = null;
 
@@ -13,9 +15,8 @@ const Microsoft: any = null;
   styleUrls: ['./map.component.css']
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnChanges {
 
-  loading: boolean = true;
   status;
 
   map1;
@@ -25,10 +26,8 @@ export class MapComponent implements OnInit {
   bingMap1;
   bingMap2;
   bingMap3;
- 
-  // imageSrc1 = 'assets/img/sote1_51_rotated.jpg';
-  // imageSrc2 = 'assets/img/sote2_51_rotated.jpg';
-  // imageSrc3 = 'assets/img/sote3_51_rotated.jpg';
+
+  ready: boolean ;
 
   @Input() imgSrc1;
   @Input() imgSrc2;
@@ -39,15 +38,32 @@ export class MapComponent implements OnInit {
 
   @Input() isTileLvl: boolean;
 
+  @Input() title: string;
 
   apiKey = setting.bing.apiKey;
   private data: any = [];
 
   constructor(
     private dataService: DataService,
+    private bingmapService: BingmapService,
   ){}
 
+  ngOnInit() {
+    console.log("From map component, ngOnInit and typeof Microsoft: ", typeof Microsoft);
+    if(typeof Microsoft !== 'undefined'){
+      console.log('BingMapComponent.ngOnInit');
+      this.status = 'BingMapComponent.ngOnInit';
+      console.log(Loader.getReady());
+      this.getMap();
+    }
+  }
+
+  ngOnChanges(){
+
+  }
+
   setData(){
+
     if(this.clientMac && this.type === "track"){
       this.dataService.getByMac(this.clientMac).subscribe((res)=>{
         this.data = res;
@@ -62,27 +78,22 @@ export class MapComponent implements OnInit {
     else if(this.type === "basic"){
       this.dataService.getRecent().subscribe((res)=>{
         this.data = res;
-        this.map1.pushPins(this.data, false, this.bingMap1, this.bingMap2, this.bingMap3);
+        if(this.data.length>0){
+          this.map1.pushPins(this.data, false, this.bingMap1, this.bingMap2, this.bingMap3);
+        }
       });
     }
 
     else if(this.type === "heat"){
       this.dataService.getRecent().subscribe((res)=>{
         this.data = res;
-        this.map1.heatMaps(this.data, this.bingMap1, this.bingMap2, this.bingMap3);
+        if(this.data.length>0){
+          this.map1.heatMaps(this.data, this.bingMap1, this.bingMap2, this.bingMap3);
+        }
       });
     }
 
 
-  }
- 
-  ngOnInit() {
-    console.log("From map component, ngOnInit and typeof Microsoft: ", typeof Microsoft);
-    if(typeof Microsoft !== 'undefined'){
-      console.log('BingMapComponent.ngOnInit');
-      this.status = 'BingMapComponent.ngOnInit';
-      this.getMap();
-    }
   }
 
   getMap(){
@@ -107,9 +118,6 @@ export class MapComponent implements OnInit {
     var el2 = document.getElementById('myMap2');
     var el3 = document.getElementById('myMap3');
 
-    // this.map1 = new BingMap(bounds1, el1, this.imageSrc1, center1);
-    // this.map2 = new BingMap(bounds2, el2, this.imageSrc2, center2);
-    // this.map3 = new BingMap(bounds3, el3, this.imageSrc3, center3);
     this.map1 = new BingMap(bounds1, el1, this.imgSrc1, center1);
     this.map2 = new BingMap(bounds2, el2, this.imgSrc2, center2);
     this.map3 = new BingMap(bounds3, el3, this.imgSrc3, center3);

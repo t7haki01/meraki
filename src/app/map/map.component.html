@@ -15,7 +15,8 @@
     </div>
 </div> -->
 <div>
-    <h1>Located by Meraki within a minute in Sote Campus</h1>
+    <p *ngIf="ready">Here comes the result: {{ready}}</p>
+    <h1>{{title}}</h1>
     <div class="map-double-size">
         <div class="map-single-size inline">
             <div id="myMap1"></div>

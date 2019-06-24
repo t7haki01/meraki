@@ -1,6 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { TrackMapComponent } from '../track-map/track-map.component';
 import { MapLoaderService } from '../map-loader.service';
 
 @Component({
@@ -23,9 +22,10 @@ export class TrackComponent implements AfterViewInit{
   imgSrc3 = 'assets/img/sote3_51_rotated.jpg';
   isTileLvl: boolean = true;
 
+  title: string = "Located by Meraki, tracked with mac address in Sote Campus"
+
   constructor(
     private dataService: DataService,
-    private trackMapComponent: TrackMapComponent,
   ) 
   {
     MapLoaderService.load().then( res => {

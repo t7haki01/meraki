@@ -17,6 +17,8 @@ export class BingMapPComponent implements OnInit {
   imgSrc3 = 'assets/img/sote3_51_rotated.jpg';
   isTileLvl: boolean = false;
 
+  title: string = "Located by Meraki within a minute in Sote Campus";
+
   constructor() {
     MapLoaderService.load().then( res => {
       console.log('BingmapLoader.load.then ', res);

@@ -1,9 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnChanges } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import Loader from '../modules/Loader.js';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class BingmapService {
+export class BingmapService implements OnChanges {
 
-  constructor() { }
+  constructor(){
+  }
+
+  ngOnChanges(){
+  }
 }
