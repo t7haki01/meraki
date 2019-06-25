@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MapLoaderService } from "../map-loader.service";
+import { Loader } from '../../modules/Loader.js';
+
 
 @Component({
   selector: 'app-bing-map-p',
@@ -12,9 +14,11 @@ export class BingMapPComponent implements OnInit {
 
   type:string = 'basic';
 
-  imgSrc1 = 'assets/img/sote1_51_rotated.jpg';
-  imgSrc2 = 'assets/img/sote2_51_rotated.jpg';
-  imgSrc3 = 'assets/img/sote3_51_rotated.jpg';
+
+  imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
+  imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
+  imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
+
   isTileLvl: boolean = false;
 
   title: string = "Located by Meraki within a minute in Sote Campus";

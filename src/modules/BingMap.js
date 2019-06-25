@@ -25,7 +25,8 @@ export default class BingMap{
       var map = new Microsoft.Maps.Map(this.element, {
         center: new Microsoft.Maps.Location(this.center[0], this.center[1]),
         credentials: apiKey,
-        zoom: 18
+        zoom: 18,
+        // mapTypeId: Microsoft.Maps.MapTypeId.aerial
       });
 
       var img;
@@ -72,7 +73,6 @@ export default class BingMap{
             img.style.height = (bottomRight.y - topLeft.y) + 'px';
         }
         loader.setReady(true);
-        console.log(loader.getReady());
       }
 
       return map;

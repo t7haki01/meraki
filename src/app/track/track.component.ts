@@ -1,6 +1,7 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input } from '@angular/core';
 import { DataService } from '../data.service';
 import { MapLoaderService } from '../map-loader.service';
+
 
 @Component({
   selector: 'app-track',
@@ -14,12 +15,14 @@ export class TrackComponent implements AfterViewInit{
   trackClicked: boolean = false;
   mapReady:boolean;
   clientMac;
+  date_from;
+  date_to;
 
   type:string = "track";
 
-  imgSrc1 = 'assets/img/sote1_51_rotated.jpg';
-  imgSrc2 = 'assets/img/sote2_51_rotated.jpg';
-  imgSrc3 = 'assets/img/sote3_51_rotated.jpg';
+  imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
+  imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
+  imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
   isTileLvl: boolean = true;
 
   title: string = "Located by Meraki, tracked with mac address in Sote Campus"
@@ -61,6 +64,10 @@ export class TrackComponent implements AfterViewInit{
   }
 
   goTrack(){
+
+    this.date_from = (<HTMLInputElement>document.getElementById("date_from")).value;
+    this.date_to = (<HTMLInputElement>document.getElementById("date_to")).value;
+
     var macAddress = "\"", lenCheck="";
     for(var i = 1; i<7;i++){
       var idTag = "mac"+i;
@@ -76,7 +83,9 @@ export class TrackComponent implements AfterViewInit{
     macAddress += "\"";
     
     if(lenCheck.length<12){
-        window.alert("Given Mac address length is wrong");                    
+        console.log(this.date_from);
+        console.log(this.date_to);
+        window.alert("Given Mac address length is wrong");
     }
     else{
       this.clientMac = macAddress;

@@ -7,7 +7,7 @@
               <h5>Track the device How it is located by meraki</h5>
             </div>
           </div>
-          <div class="row input-group">
+          <div class="row input-group margin-little-bottom">
             <div class="col">
               <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac1" autocomplete="off">
             </div>:
@@ -28,6 +28,16 @@
             </div>
             <div class="col">
               <button class="btn" (click)="goTrack()" id="btn">Track</button>
+            </div>
+          </div>
+          <div class="row input-group">
+            <div class="col">
+              <span class="input-group-text" >From</span>
+              <input class="form-control" type="date" id="date_from">
+            </div>
+            <div class="col">
+                <span class="input-group-text">To</span>
+              <input class="form-control" type="date" id="date_to">
             </div>
           </div>
         </div>

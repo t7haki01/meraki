@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
 import { DataService } from '../data.service';
 import { BingmapService } from '../bingmap.service';
 
@@ -59,7 +59,6 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-
   }
 
   setData(){
@@ -98,29 +97,39 @@ export class MapComponent implements OnInit, OnChanges {
 
   getMap(){
     /***Init the center point of each maps and overlaying map bound also data */
-    var latOriginal = 65.0086909, lngOriginal = 25.5115079;
-    var lat3 = 65.0083009, lng3 = 25.5108009;
 
+    // very originally used for it
+    // var latOriginal = 65.0086909, lngOriginal = 25.5115079;    
+    // var plus = 0.0009500, minus = -0.0009000;
+    // var bounds1 = [ latOriginal+plus, lngOriginal+minus*3, latOriginal+minus, lngOriginal+plus ];
+
+    // Here is modified map's properties
+    var latMap1 = 65.0086409, lngMap1 = 25.5115079;
+    var plusMap1 = 0.0009500, minusMap1 = -0.0009000;
+    var boundsMap1 = [ latMap1+plusMap1, lngMap1+minusMap1*3, latMap1+minusMap1, lngMap1+plusMap1 ];
+ 
+    var latMap2 = 65.0086209, lngMap2 = 25.5110600;
+    var plusMap2 = 0.001000, minusMap2 = -0.0008000;
+    var boundsMap2 = [ latMap2+plusMap2, lngMap2+minusMap2*3, latMap2+minusMap2, lngMap2+plusMap2 ];
+
+    var latMap3 = 65.0083209, lngMap3 = 25.5106409; 
+    var plusMap3 = 0.000800, minusMap3 = -0.0006000;
+    var boundsMap3 = [ latMap3+plusMap3, lngMap3+minusMap3*3, latMap3+minusMap3, lngMap3+plusMap3 ];
+    
+        
     /**Modofication values for moving maps bounds with coordinate values */
-    var plus = 0.0009000, minus = -0.0009000;
-    var plus2 = 0.001000, minus2 = -0.0010000;
-    var plus3 = 0.000900, minus3 = -0.0006000;
-
-    var bounds1 = [ latOriginal+plus, lngOriginal+minus*3, latOriginal+minus, lngOriginal+plus ];
-    var bounds2 = [ latOriginal+plus2, lngOriginal+minus2*3, latOriginal+minus2, lngOriginal+plus2 ];
-    var bounds3 = [ lat3+plus3, lng3+minus3*3, lat3+minus3, lng3+plus3 ];
 
     var center1 = [65.0086909, 25.5106079];
-    var center2 = [65.0088109, 25.5105079];
-    var center3 = [65.0086009, 25.5103000];
+    var center2 = [65.0086909, 25.5103579];
+    var center3 = [65.0084509, 25.5101500];
 
     var el1 = document.getElementById('myMap1');
     var el2 = document.getElementById('myMap2');
     var el3 = document.getElementById('myMap3');
 
-    this.map1 = new BingMap(bounds1, el1, this.imgSrc1, center1);
-    this.map2 = new BingMap(bounds2, el2, this.imgSrc2, center2);
-    this.map3 = new BingMap(bounds3, el3, this.imgSrc3, center3);
+    this.map1 = new BingMap(boundsMap1, el1, this.imgSrc1, center1);
+    this.map2 = new BingMap(boundsMap2, el2, this.imgSrc2, center2);
+    this.map3 = new BingMap(boundsMap3, el3, this.imgSrc3, center3);
 
     if(this.isTileLvl){
       this.bingMap1 = this.map1.getBingMapTileLvl();
