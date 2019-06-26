@@ -38,9 +38,9 @@ router.get('/', function(req, res, next) {
     var dbo = db.db(mongoDb.dbName);
     let query = {};
 
-    if(req.query.date){
-      let startTime = getDateForQuery(req.query.date, 0);
-      let endTime = getDateForQuery(req.query.date, 1);
+    if(req.query){
+      let startTime = getDateForQuery(req.query.date_from, 0);
+      let endTime = getDateForQuery(req.query.date_to, 1);
 
       query = {
           "seenTime" : {
@@ -80,9 +80,9 @@ router.get('/:clientMac?', function(req, res, next){
       var dbo = db.db(mongoDb.dbName);
       var query = {};
 
-      if(req.query.date){
-        let startTime = getDateForQuery(req.query.date, 0);
-        let endTime = getDateForQuery(req.query.date, 1);
+      if(req.query){
+        let startTime = getDateForQuery(req.query.date_from, 0);
+        let endTime = getDateForQuery(req.query.date_to, 1);
   
         query = {
             "seenTime" : {

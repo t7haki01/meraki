@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import setting from '../assets/settings.js';
@@ -15,8 +15,11 @@ export class DataService {
     private http: HttpClient
   ) { }
 
-  getByMac(mac: string): Observable<Object>{
-    return this.http.get(this.apiUrl.get + mac);
+  getByMac(mac: string, date_from: string, date_to: string): Observable<Object>{
+    let params = new HttpParams();
+    params = params.append('date_from', date_from);
+    params = params.append('date_to', date_to);
+    return this.http.get(this.apiUrl.get + mac, {params: params});
   }
   getRecent(): Observable<Object>{
     return this.http.get(this.apiUrl.get);

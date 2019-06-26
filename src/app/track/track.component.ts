@@ -27,6 +27,9 @@ export class TrackComponent implements AfterViewInit{
 
   title: string = "Located by Meraki, tracked with mac address in Sote Campus"
 
+  today = this.getToday();
+
+
   constructor(
     private dataService: DataService,
   ) 
@@ -88,10 +91,26 @@ export class TrackComponent implements AfterViewInit{
         window.alert("Given Mac address length is wrong");
     }
     else{
+      this.date_from = (<HTMLInputElement>document.getElementById("date_from")).value;
+      this.date_to = (<HTMLInputElement>document.getElementById("date_to")).value;
+
       this.clientMac = macAddress;
       this.trackClicked = true;
       this.guideOn = false;
     }
+  }
+
+  getToday(){
+    let today: any = new Date();
+    let yr = today.getFullYear();
+    let mon = today.getMonth() + 1;
+    if(mon<10)
+      mon = "0" + mon;
+    let date = today.getDate();
+    if(date<10)
+      date = "0" + date;
+    today = "" + yr + "-" + mon + "-" + date;
+    return today;
   }
 
 }

@@ -40,6 +40,9 @@ export class MapComponent implements OnInit, OnChanges {
 
   @Input() title: string;
 
+  @Input() date_from;
+  @Input() date_to;
+
   apiKey = setting.bing.apiKey;
   private data: any = [];
 
@@ -64,7 +67,8 @@ export class MapComponent implements OnInit, OnChanges {
   setData(){
 
     if(this.clientMac && this.type === "track"){
-      this.dataService.getByMac(this.clientMac).subscribe((res)=>{
+
+      this.dataService.getByMac(this.clientMac, this.date_from, this.date_to).subscribe((res)=>{
         this.data = res;
         if(this.data.length>0){
           this.map1.pushPins(this.data, true, this.bingMap1, this.bingMap2, this.bingMap3);
@@ -73,6 +77,7 @@ export class MapComponent implements OnInit, OnChanges {
           window.alert("No any trace found!");
         }
       });
+
     }
     else if(this.type === "basic"){
       this.dataService.getRecent().subscribe((res)=>{
