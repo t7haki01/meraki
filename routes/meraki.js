@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
     var dbo = db.db(mongoDb.dbName);
     let query = {};
 
-    if(req.query){
+    if(req.query.date_from && req.query.date_to){
       let startTime = getDateForQuery(req.query.date_from, 0);
       let endTime = getDateForQuery(req.query.date_to, 1);
 
@@ -60,7 +60,7 @@ router.get('/', function(req, res, next) {
       };
     }
 
-    dbo.collection(mongoDb.collectionName).find(query).toArray(function(err,result){
+    dbo.collection(mongoDb.collectionName).find(query).limit(100).toArray(function(err,result){
       if(err){
         console.log(err);
         throw err;
