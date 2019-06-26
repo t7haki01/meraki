@@ -113,4 +113,25 @@ export class TrackComponent implements AfterViewInit{
     return today;
   }
 
+  goBack(){
+    this.guideOn = true;
+    this.data = [];
+    this.trackClicked = false;
+    this.mapReady;
+    this.clientMac;
+    this.date_from;
+    this.date_to;
+  
+    this.type = "track";
+  
+    this.imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
+    this.imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
+    this.imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
+    this.isTileLvl = true;
+  
+    this.title = "Located by Meraki, tracked with mac address in Sote Campus"
+  
+    this.today = this.getToday();
+  }
+
 }

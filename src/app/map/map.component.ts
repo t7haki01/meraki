@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
+
 import { DataService } from '../data.service';
 import { BingmapService } from '../bingmap.service';
 
@@ -16,8 +17,6 @@ const Microsoft: any = null;
 })
 
 export class MapComponent implements OnInit, OnChanges {
-
-  status;
 
   map1;
   map2;
@@ -55,7 +54,6 @@ export class MapComponent implements OnInit, OnChanges {
     console.log("From map component, ngOnInit and typeof Microsoft: ", typeof Microsoft);
     if(typeof Microsoft !== 'undefined'){
       console.log('BingMapComponent.ngOnInit');
-      this.status = 'BingMapComponent.ngOnInit';
       console.log(Loader.getReady());
       this.getMap();
     }

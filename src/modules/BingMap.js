@@ -15,6 +15,7 @@ export default class BingMap{
     )
     {
       this.bounds = [ new Microsoft.Maps.Location(bounds[0], bounds[1]), new Microsoft.Maps.Location(bounds[2], bounds[3]) ];
+      this.maxBounds = [ new Microsoft.Maps.Location(bounds[0]+1, bounds[1]+1), new Microsoft.Maps.Location(bounds[2]+1, bounds[3]+1) ];
       this.element = element;
       this.imgSrc = imgSrc;
       this.center = center;
@@ -26,7 +27,12 @@ export default class BingMap{
         center: new Microsoft.Maps.Location(this.center[0], this.center[1]),
         credentials: apiKey,
         zoom: 18,
-        // mapTypeId: Microsoft.Maps.MapTypeId.aerial
+        showZoomButtons: false,
+        showMapTypeSelector: false,
+        showLocateMeButton: false,
+        minZoom: 18,
+        // mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+        // maxBounds: this.maxBounds
       });
 
       var img;
@@ -143,6 +149,10 @@ export default class BingMap{
 
     pushPins(data, polyLine, map1, map2, map3){
 
+      var pushPins1 = [];
+      var pushPins2 = [];
+      var pushPins3 = [];
+
       var polyArray1 = [];
       var polyArray2 = [];
       var polyArray3 = [];
@@ -156,7 +166,30 @@ export default class BingMap{
             if(data[i].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || data[i].apFloors == "[\"Kontinkangas-Honka-1krs\"]" 
                 || data[i].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"){
                 if(map1){
-                  map1.entities.push(pin);
+                  pushPins1.push(pin);
+                  var infobox1 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
+                  var pushpin = pin;
+                  var maker = data[i].manufacturer!=null?data[i].manufacturer:"unknown";
+                  //Store some metadata with the pushpin
+                      pushpin.metadata = {
+                      title: data[i].clientMac[1] +""+data[i].clientMac[2] + ":XX:XX:XX:XX:" +data[i].clientMac[data[i].clientMac.length-3]+""+data[i].clientMac[data[i].clientMac.length-2],
+                      description:"Manufacturer: " + maker + "<br/>" 
+                                  + "seenTime: " + data[i].seenTime + "<br/>"
+                                  + "Latitude: " + data[i].lat + "<br/>"
+                                  + "Longitude: " + data[i].lng + "<br/>"
+                                  + "Uncertainty: " + data[i].lat + " m" + "<br/>"
+                                  + "Ap Floor: " + data[i].apFloors + "<br/>"
+                                  + "RSSI: " + data[i].rssi + "<br/>"
+                                  + "seenEpoch: " + data[i].seenEpoch + " s" + "<br/>"
+                  };
+                  Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
+                      infobox1.setOptions({ 
+                          location: args.target.getLocation(), 
+                          title: args.target.metadata.title, 
+                          description: args.target.metadata.description, 
+                          visible: true 
+                      }); 
+                  });
                 }
                 if(polyLine){
                   polyArray1.push(loc);
@@ -164,7 +197,32 @@ export default class BingMap{
             }
             else if(data[i].apFloors == "[\"Kontinkangas-Paasi-2krs\"]" || data[i].apFloors == "[\"Kontinkangas-Louhi-2krs\"]"){
               if(map2){
-                map2.entities.push(pin);
+                pushPins2.push(pin);
+
+                var infobox2 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
+                var pushpin = pin;
+                var maker = data[i].manufacturer!=null?data[i].manufacturer:"unknown";
+                //Store some metadata with the pushpin
+                    pushpin.metadata = {
+                    title: data[i].clientMac[1] +""+data[i].clientMac[2] + ":XX:XX:XX:XX:" +data[i].clientMac[data[i].clientMac.length-3]+""+data[i].clientMac[data[i].clientMac.length-2],
+                    description:"Manufacturer: " + maker + "<br/>" 
+                                + "seenTime: " + data[i].seenTime + "<br/>"
+                                + "Latitude: " + data[i].lat + "<br/>"
+                                + "Longitude: " + data[i].lng + "<br/>"
+                                + "Uncertainty: " + data[i].lat + " m" + "<br/>"
+                                + "Ap Floor: " + data[i].apFloors + "<br/>"
+                                + "RSSI: " + data[i].rssi + "<br/>"
+                                + "seenEpoch: " + data[i].seenEpoch + " s" + "<br/>"
+                };
+                Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
+                    infobox2.setOptions({ 
+                        location: args.target.getLocation(), 
+                        title: args.target.metadata.title, 
+                        description: args.target.metadata.description, 
+                        visible: true 
+                    }); 
+                });
+
               }
                 if(polyLine){
                   polyArray2.push(loc);
@@ -172,7 +230,31 @@ export default class BingMap{
             }
             else if(data[i].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
               if(map3){
-                map3.entities.push(pin);
+                pushPins3.push(pin);
+
+                var infobox3 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
+                var pushpin = pin;
+                var maker = data[i].manufacturer!=null?data[i].manufacturer:"unknown";
+                //Store some metadata with the pushpin
+                    pushpin.metadata = {
+                    title: data[i].clientMac[1] +""+data[i].clientMac[2] + ":XX:XX:XX:XX:" +data[i].clientMac[data[i].clientMac.length-3]+""+data[i].clientMac[data[i].clientMac.length-2],
+                    description:"Manufacturer: " + maker + "<br/>" 
+                                + "seenTime: " + data[i].seenTime + "<br/>"
+                                + "Latitude: " + data[i].lat + "<br/>"
+                                + "Longitude: " + data[i].lng + "<br/>"
+                                + "Uncertainty: " + data[i].lat + " m" + "<br/>"
+                                + "Ap Floor: " + data[i].apFloors + "<br/>"
+                                + "RSSI: " + data[i].rssi + "<br/>"
+                                + "seenEpoch: " + data[i].seenEpoch + " s" + "<br/>"
+                };
+                Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
+                    infobox3.setOptions({ 
+                        location: args.target.getLocation(), 
+                        title: args.target.metadata.title, 
+                        description: args.target.metadata.description, 
+                        visible: true 
+                    }); 
+                });
               }
                 if(polyLine){
                   polyArray3.push(loc);
@@ -180,7 +262,31 @@ export default class BingMap{
             }
             else if (data[i].apFloors == "[]"){
               if(map1){
-                map1.entities.push(pin);                    
+                pushPins1.push(pin);
+                var infobox1 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
+                var pushpin = pin;
+                var maker = data[i].manufacturer!=null?data[i].manufacturer:"unknown";
+                //Store some metadata with the pushpin
+                    pushpin.metadata = {
+                    title: data[i].clientMac[1] +""+data[i].clientMac[2] + ":XX:XX:XX:XX:" +data[i].clientMac[data[i].clientMac.length-3]+""+data[i].clientMac[data[i].clientMac.length-2],
+                    description:"Manufacturer: " + maker + "<br/>" 
+                                + "seenTime: " + data[i].seenTime + "<br/>"
+                                + "Latitude: " + data[i].lat + "<br/>"
+                                + "Longitude: " + data[i].lng + "<br/>"
+                                + "Uncertainty: " + data[i].lat + " m" + "<br/>"
+                                + "Ap Floor: " + data[i].apFloors + "<br/>"
+                                + "RSSI: " + data[i].rssi + "<br/>"
+                                + "seenEpoch: " + data[i].seenEpoch + " s" + "<br/>"
+                };
+                Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
+                    infobox1.setOptions({ 
+                        location: args.target.getLocation(), 
+                        title: args.target.metadata.title, 
+                        description: args.target.metadata.description, 
+                        visible: true 
+                    }); 
+                });
+                
               }
                 if(polyLine){
                   polyArray1.push(loc);
@@ -188,6 +294,18 @@ export default class BingMap{
             }
         }
       }
+
+      var infobox1 = new Microsoft.Maps.Infobox(pushPins1[0].getLocation(), { visible: false, autoAlignment: true });
+      infobox1.setMap(map1);
+      var infobox2 = new Microsoft.Maps.Infobox(pushPins2[0].getLocation(), { visible: false, autoAlignment: true });
+      infobox2.setMap(map2);
+      var infobox3 = new Microsoft.Maps.Infobox(pushPins3[0].getLocation(), { visible: false, autoAlignment: true });
+      infobox3.setMap(map3);
+      
+      map1.entities.push(pushPins1);
+      map2.entities.push(pushPins2);
+      map3.entities.push(pushPins3);
+
       if(polyLine){
         var polyline1 = new Microsoft.Maps.Polyline(polyArray1, null);
         var polyline2 = new Microsoft.Maps.Polyline(polyArray2, null);

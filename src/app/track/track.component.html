@@ -42,6 +42,7 @@
           </div>
         </div>
         <div *ngIf="trackClicked && mapReady">
+          <div><button class="btn btn-primary" (click)="goBack()" >Back</button></div>
           <app-map [clientMac]="clientMac" [imgSrc1]="imgSrc1" [imgSrc2]="imgSrc2" [imgSrc3]="imgSrc3" [isTileLvl]="isTileLvl" [type]="type" [title]="title" [date_from]="date_from" [date_to]="date_to"></app-map>
         </div>
       </div>
