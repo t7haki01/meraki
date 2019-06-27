@@ -18,6 +18,10 @@ const Microsoft: any = null;
 
 export class MapComponent implements OnInit, OnChanges {
 
+  el1 = false;
+  el2 = false;
+  el3 = false;
+
   map1;
   map2;
   map3;
@@ -91,6 +95,38 @@ export class MapComponent implements OnInit, OnChanges {
         this.data = res;
         if(this.data.length>0){
           this.map1.heatMaps(this.data, this.bingMap1, this.bingMap2, this.bingMap3);
+        }
+      });
+    }
+
+    else if(this.clientMac && this.type === "near"){
+      this.dataService.getRecent().subscribe((res)=>{
+        this.data = res;
+        if(this.data.length>0){
+          this.dataService.getNear(this.clientMac).subscribe((res)=>{
+            var el1 = document.getElementById('myMap1');
+            var el2 = document.getElementById('myMap2');
+            var el3 = document.getElementById('myMap3');
+            var apMap;
+
+            if(res[0].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || res[0].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"
+            || res[0].apFloors == "[\"Kontinkangas-Honka-1krs\"]" || res[0].apFloors == "[]"){
+              apMap = this.bingMap1;
+            }
+            if(res[0].apFloors == "[\"Kontinkangas-Louhi-2krs\"]" || res[0].apFloors == "[\"Kontinkangas-Paasi-2krs\"]"){
+              apMap = this.bingMap2;
+            }
+            if(res[0].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
+              apMap = this.bingMap3;
+            }
+
+            if(apMap){
+              this.map1.nearMap(res, this.data, apMap);
+            }
+            else{
+              window.alert("no any map found")
+            }
+          })
         }
       });
     }

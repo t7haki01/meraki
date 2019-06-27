@@ -87,38 +87,13 @@ export default class BingMap{
 
     heatMaps(data, map1, map2, map3){
       Microsoft.Maps.loadModule('Microsoft.Maps.HeatMap', function () {
-        var locations1 = [];
-        var locations2 = [];
-        var locations3 = [];
-        
-        for(var i = 0; i < data.length; i++){
-          if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
-              var loc = new Microsoft.Maps.Location(
-              parseFloat(data[i].lat), parseFloat(data[i].lng));
-              
-              if(data[i].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || data[i].apFloors == "[\"Kontinkangas-Honka-1krs\"]" 
-                  || data[i].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"){
-                  if(map1){
-                    locations1.push(loc);
-                  }
-              }
-              else if(data[i].apFloors == "[\"Kontinkangas-Paasi-2krs\"]" || data[i].apFloors == "[\"Kontinkangas-Louhi-2krs\"]"){
-                if(map2){
-                  locations2.push(loc);
-                }
-              }
-              else if(data[i].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
-                if(map3){
-                  locations3.push(loc);
-                }
-              }
-              else if (data[i].apFloors == "[]"){
-                if(map1){
-                  locations1.push(loc);
-                }5
-              }
-          }
-        }
+        var condition1 = "[\"Kontinkangas-Louhi-1krs\"]" + "[\"Kontinkangas-Honka-1krs\"]" + "[\"Kontinkangas-Paasi-1krs\"]" + "[]";
+        var condition2 = "[\"Kontinkangas-Louhi-2krs\"]" + "[\"Kontinkangas-Paasi-2krs\"]";
+        var condition3 = "[\"Kontinkangas-Louhi-3krs\"]";
+ 
+        var locations1 = filterDataBy(data, condition1);
+        var locations2 = filterDataBy(data, condition2);
+        var locations3 = filterDataBy(data, condition3);
 
         var heatMapOptions = {
           intensity: 0.65,
@@ -151,6 +126,8 @@ export default class BingMap{
 
       var pushPins1 = [];
       var pushPins2 = [];
+      var condition2 = "[\"Kontinkangas-Paasi-2krs\"]"+"[\"Kontinkangas-Louhi-2krs\"]";
+      // var pushPins2 = filterDataBy(data, condition2);
       var pushPins3 = [];
 
       var polyArray1 = [];
@@ -198,7 +175,6 @@ export default class BingMap{
             else if(data[i].apFloors == "[\"Kontinkangas-Paasi-2krs\"]" || data[i].apFloors == "[\"Kontinkangas-Louhi-2krs\"]"){
               if(map2){
                 pushPins2.push(pin);
-
                 var infobox2 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
                 var pushpin = pin;
                 var maker = data[i].manufacturer!=null?data[i].manufacturer:"unknown";
@@ -286,7 +262,6 @@ export default class BingMap{
                         visible: true 
                     }); 
                 });
-                
               }
                 if(polyLine){
                   polyArray1.push(loc);
@@ -294,7 +269,6 @@ export default class BingMap{
             }
         }
       }
-
       var infobox1 = new Microsoft.Maps.Infobox(pushPins1[0].getLocation(), { visible: false, autoAlignment: true });
       infobox1.setMap(map1);
       var infobox2 = new Microsoft.Maps.Infobox(pushPins2[0].getLocation(), { visible: false, autoAlignment: true });
@@ -315,6 +289,82 @@ export default class BingMap{
         map3.entities.push(polyline3);
       }
 
+  }
+
+  nearMap(client, data, map){
+    let clientLat = client[0].lat, clientLng = client[0].lng;
+    let clientTime = client[0].seenTime;
+    var pushPins = [];
+
+    var clientLoc = new Microsoft.Maps.Location(
+      parseFloat(clientLat), parseFloat(clientLng)
+    );
+
+    var clientPin = new Microsoft.Maps.Pushpin(clientLoc,{
+      text:"YOU", 
+      color: "red",
+      /* title: "title", 
+      subTitle: "subTitle", */ 
+    });
+
+    // var infobox = new Microsoft.Maps.Infobox(clientLoc,{ 
+    //       title: '', 
+    //       description: 'Seattle', 
+    //       visible: false 
+    //     });
+
+
+    /** */
+
+    var infobox = new Microsoft.Maps.Infobox(clientPin.getLocation(), { visible: false, autoAlignment: true });
+    infobox.setMap(map);
+
+
+    /** */
+
+    // infobox.setMap(map);
+    // Microsoft.Maps.Events.addHandler(clientPin, 'click', () => {
+    //   infobox.setOptions({ visible: true });
+    // });
+
+    map.entities.push(clientPin);
+
+    clientPin.setOptions({ enableHoverStyle: true, enableClickedStyle: true});
+
+    for(var i = 0; i < data.length; i++){
+      if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
+        var loc = new Microsoft.Maps.Location(
+        parseFloat(data[i].lat), parseFloat(data[i].lng));
+        var pin = new Microsoft.Maps.Pushpin(loc, 
+          {
+            // text:"Someone"+i, title: "title"+i, subTitle: "subTitle"+i
+          });
+
+        if( client[0].apFloors == data[i].apFloors ){
+
+            let timeDif = ( new Date(data[i].seenTime).getTime() - new Date(clientTime).getTime() ) / 1000;
+
+            if(timeDif<0){
+              timeDif = timeDif*(-1);
+            }
+
+            let distance = distanceInMeter(clientLat, clientLng, data[i].lat, data[i].lng);
+
+            if(timeDif <= 60 && distance <= 20){
+              if(map){
+
+                /** */
+
+                
+
+                /** */
+                pushPins.push(pin);
+              }
+            }
+        }
+      }
+    }
+    map.entities.push(pushPins);
   }
   getBingMapTileLvl(){
     return GetMap(this.bounds, this.element, this.center, this.imgSrc);
@@ -401,3 +451,72 @@ function GetMap(bound, el, center, imgSrc) {
         loadLayer();
         map.setView({zoom: options.zoom,});
     };
+
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2); 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
+function distanceInMeter(lat1, lon1, lat2, lon2) {
+  var p = 0.017453292519943295;    // Math.PI / 180
+  var c = Math.cos;
+  var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+          c(lat1 * p) * c(lat2 * p) * 
+          (1 - c((lon2 - lon1) * p))/2;
+
+  return 12742 * Math.asin(Math.sqrt(a)) * 1000; // 2 * R; R = 6371 km
+}
+
+
+function filterDataBy(data, condition){
+  var resultArray = [];
+  for(var i = 0; i < data.length; i++){
+    if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
+      var loc = new Microsoft.Maps.Location(parseFloat(data[i].lat), parseFloat(data[i].lng));
+      var pin = new Microsoft.Maps.Pushpin(loc);
+      if(condition.includes(data[i].apFloors)){
+        resultArray.push(pin);
+      }
+    }
+  }
+  return resultArray;
+}
+
+function addInfoBoxHandler(pin, data){
+  var infobox2 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
+  var pushpin = pin;
+  var maker = data.manufacturer!=null?data.manufacturer:"unknown";
+  //Store some metadata with the pushpin
+      pushpin.metadata = {
+      title: data.clientMac[1] +""+data.clientMac[2] + ":XX:XX:XX:XX:" +data.clientMac[data.clientMac.length-3]+""+data.clientMac[data.clientMac.length-2],
+      description:"Manufacturer: " + maker + "<br/>" 
+                  + "seenTime: " + data.seenTime + "<br/>"
+                  + "Latitude: " + data.lat + "<br/>"
+                  + "Longitude: " + data.lng + "<br/>"
+                  + "Uncertainty: " + data.lat + " m" + "<br/>"
+                  + "Ap Floor: " + data.apFloors + "<br/>"
+                  + "RSSI: " + data.rssi + "<br/>"
+                  + "seenEpoch: " + data.seenEpoch + " s" + "<br/>"
+  };
+  Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
+      infobox2.setOptions({ 
+          location: args.target.getLocation(), 
+          title: args.target.metadata.title, 
+          description: args.target.metadata.description, 
+          visible: true 
+      }); 
+  });
+}

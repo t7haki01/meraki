@@ -13,6 +13,7 @@ export class NavComponent implements OnInit {
   route2: string = setting.nav.route2;
   route3: string = setting.nav.route3;
   route4: string = setting.nav.route4;
+  route5: string = setting.nav.route5;
   
   constructor() { }
 

@@ -18,13 +18,13 @@
     <h1>{{title}}</h1>
     <div class="map-double-size">
         <div class="map-single-size inline">
-            <div id="myMap1"></div>
+            <div ng-hide="el1" id="myMap1"></div>
         </div>
         <div class="map-single-size-sm inline margin-left-little">
-            <div id="myMap2"></div>
+            <div ng-hide="el2" id="myMap2"></div>
         </div>
     </div>
     <div>
-        <div class="map-small-size position-relative margin-bottom-little margin-left-little" id="myMap3"></div>
+        <div ng-hide="el3" class="map-small-size position-relative margin-bottom-little margin-left-little" id="myMap3"></div>
     </div>
 </div>

@@ -5,6 +5,8 @@ import { AboutComponent } from './about/about.component';
 import { TrackComponent } from './track/track.component';
 import { HomeComponent } from './home/home.component';
 import { HeatComponent } from './heat/heat.component';
+import { NearComponent } from './near/near.component';
+
 
 import setting from '../assets/settings.js';
 
@@ -17,6 +19,7 @@ const routes: Routes = [
   // {path: setting.nav.route2, component: GuideComponent},
   {path: setting.nav.route3, component: TrackComponent},
   {path: setting.nav.route4, component: HeatComponent},
+  {path: setting.nav.route5, component: NearComponent},
 ];
 
 @NgModule({

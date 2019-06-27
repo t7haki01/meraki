@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9 top-margin">
+      <div *ngIf="!checkClicked" class="row">
+        <div class="row">
+          <div class="col">
+            <h5>Check who is near</h5>
+          </div>
+        </div>
+        <div class="row input-group margin-little-bottom">
+          <div class="col">
+            <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac1" autocomplete="off">
+          </div>:
+          <div class="col">
+            <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac2" autocomplete="off">
+          </div>:
+          <div class="col">
+            <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac3" autocomplete="off">
+          </div>:
+          <div class="col">
+            <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac4" autocomplete="off">
+          </div>:
+          <div class="col">
+            <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac5" autocomplete="off">
+          </div>:
+          <div class="col">
+            <input class="form-control" (keyup)="inputControl()" maxlength="" id="mac6" autocomplete="off">
+          </div>
+          <div class="col">
+            <button class="btn" (click)="goCheck()" id="btn">Check</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="checkClicked && mapReady">
+        <div><button class="btn btn-primary" (click)="goBack()" >Back</button></div>
+        <app-map [clientMac]="clientMac" [imgSrc1]="imgSrc1" [imgSrc2]="imgSrc2" [imgSrc3]="imgSrc3" [isTileLvl]="isTileLvl" [type]="type" [title]="title"></app-map>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <app-guide *ngIf="guideOn"></app-guide>
+    </div>
+  </div>
+</div>

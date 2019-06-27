@@ -25,4 +25,8 @@ export class DataService {
     return this.http.get(this.apiUrl.get);
   }
 
+  getNear(mac: string){
+    return this.http.get(this.apiUrl.get + "/lastseen/" + mac);
+  }
+
 }
