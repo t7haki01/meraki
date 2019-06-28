@@ -1,4 +1,5 @@
 @import '../../assets/css/bingMap.css';
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
 
 .time-font{
     font-family: 'Times New Roman', Times, serif;

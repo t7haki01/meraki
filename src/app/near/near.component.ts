@@ -20,9 +20,14 @@ export class NearComponent implements AfterViewInit {
   imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
   imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
   imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
+  
   isTileLvl: boolean = false;
 
-  title: string = "Located by Meraki\nTracked with mac address in Sote Campus\nWho is near around"
+  title: string = "Located by Meraki";
+  
+  subTitle: string = "Where am i? Who is around?";
+  
+  description: string = "within 20m, loacted within a minute, in same floor";
 
   constructor(
     private dataService: DataService,

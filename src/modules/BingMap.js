@@ -303,29 +303,31 @@ export default class BingMap{
     var clientPin = new Microsoft.Maps.Pushpin(clientLoc,{
       text:"YOU", 
       color: "red",
-      /* title: "title", 
-      subTitle: "subTitle", */ 
+      // title: client[0].clientMac, 
+      // subTitle: client[0].seenTime + "\n"
+      // + "("+client[0].lat + "," + client[0].lng + ")", 
     });
 
-    // var infobox = new Microsoft.Maps.Infobox(clientLoc,{ 
-    //       title: '', 
-    //       description: 'Seattle', 
-    //       visible: false 
-    //     });
+    var infobox = new Microsoft.Maps.Infobox(clientLoc,{ 
+      title: client[0].clientMac, 
+      description: client[0].seenTime + "<br/>"
+      + "("+client[0].lat + "," + client[0].lng + ")", 
+      visible: false 
+    });
 
 
     /** */
 
-    var infobox = new Microsoft.Maps.Infobox(clientPin.getLocation(), { visible: false, autoAlignment: true });
-    infobox.setMap(map);
-
-
-    /** */
-
+    // var infobox = new Microsoft.Maps.Infobox(clientPin.getLocation(), { visible: false, autoAlignment: true });
     // infobox.setMap(map);
-    // Microsoft.Maps.Events.addHandler(clientPin, 'click', () => {
-    //   infobox.setOptions({ visible: true });
-    // });
+
+
+    /** */
+
+    infobox.setMap(map);
+    Microsoft.Maps.Events.addHandler(clientPin, 'click', () => {
+      infobox.setOptions({ visible: true });
+    });
 
     map.entities.push(clientPin);
 
@@ -337,7 +339,12 @@ export default class BingMap{
         parseFloat(data[i].lat), parseFloat(data[i].lng));
         var pin = new Microsoft.Maps.Pushpin(loc, 
           {
-            // text:"Someone"+i, title: "title"+i, subTitle: "subTitle"+i
+            // text:"Someone"+i, 
+            title: data[i].clientMac[1] +""+data[i].clientMac[2] + ":XX:XX:XX:XX:" +data[i].clientMac[data[i].clientMac.length-3]+""+data[i].clientMac[data[i].clientMac.length-2], 
+            subTitle: 
+            "seenTime: " + data[i].seenTime + "\n"
+            + "(" + data[i].lat + "," + data[i].lng + ")"
+
           });
 
         if( client[0].apFloors == data[i].apFloors ){

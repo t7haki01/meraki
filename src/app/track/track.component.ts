@@ -25,7 +25,9 @@ export class TrackComponent implements AfterViewInit{
   imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
   isTileLvl: boolean = true;
 
-  title: string = "Located by Meraki, tracked with mac address in Sote Campus"
+  title: string = "Located by Meraki"
+
+  subTitle: string ="Tracked with mac address in Sote Campus"
 
   today = this.getToday();
 

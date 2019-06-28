@@ -41,9 +41,11 @@ export class MapComponent implements OnInit, OnChanges {
 
   @Input() isTileLvl: boolean;
 
-  @Input() subTitle: string;
-
   @Input() title: string;
+  
+  @Input() subTitle: string;
+  
+  @Input() description: string;
 
   @Input() date_from;
   @Input() date_to;
