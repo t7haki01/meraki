@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
     let limit = 100;
 
     if(req.query.limit){
-      limit = req.query.limit;
+      limit = ParseInt(req.query.limit);
     }
 
     if(req.query.date_from && req.query.date_to){
