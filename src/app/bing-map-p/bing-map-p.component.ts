@@ -21,7 +21,9 @@ export class BingMapPComponent implements OnInit {
 
   isTileLvl: boolean = false;
 
-  title: string = "Located by Meraki within a minute in Sote Campus";
+  title: string = "Located by Meraki";
+
+  subTitle: string = "Within a minute in Sote Campus"
 
   constructor() {
     MapLoaderService.load().then( res => {

@@ -41,6 +41,8 @@ export class MapComponent implements OnInit, OnChanges {
 
   @Input() isTileLvl: boolean;
 
+  @Input() subTitle: string;
+
   @Input() title: string;
 
   @Input() date_from;
@@ -91,8 +93,9 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
     else if(this.type === "heat"){
-      this.dataService.getRecent().subscribe((res)=>{
+      this.dataService.getToday().subscribe((res)=>{
         this.data = res;
+        console.log(this.data)
         if(this.data.length>0){
           this.map1.heatMaps(this.data, this.bingMap1, this.bingMap2, this.bingMap3);
         }

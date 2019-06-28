@@ -37,6 +37,11 @@ router.get('/', function(req, res, next) {
     }
     var dbo = db.db(mongoDb.dbName);
     let query = {};
+    let limit = 100;
+
+    if(req.query.limit){
+      limit = req.query.limit;
+    }
 
     if(req.query.date_from && req.query.date_to){
       let startTime = getDateForQuery(req.query.date_from, 0);
@@ -60,7 +65,7 @@ router.get('/', function(req, res, next) {
       };
     }
 
-    dbo.collection(mongoDb.collectionName).find(query).limit(100).toArray(function(err,result){
+    dbo.collection(mongoDb.collectionName).find(query).limit(limit).toArray(function(err,result){
       if(err){
         console.log(err);
         throw err;

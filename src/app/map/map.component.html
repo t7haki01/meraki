@@ -15,16 +15,17 @@
     </div>
 </div> -->
 <div>
-    <h1>{{title}}</h1>
+    <h2 *ngIf="title" class="cursive-font">{{title}}</h2>
+    <p *ngIf="subTitle" class="lead">{{subTitle}}</p>
     <div class="map-double-size">
         <div class="map-single-size inline">
-            <div ng-hide="el1" id="myMap1"></div>
+            <div id="myMap1"></div>
         </div>
         <div class="map-single-size-sm inline margin-left-little">
-            <div ng-hide="el2" id="myMap2"></div>
+            <div id="myMap2"></div>
         </div>
     </div>
     <div>
-        <div ng-hide="el3" class="map-small-size position-relative margin-bottom-little margin-left-little" id="myMap3"></div>
+        <div class="map-small-size position-relative margin-bottom-little margin-left-little" id="myMap3"></div>
     </div>
 </div>

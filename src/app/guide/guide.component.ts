@@ -92,12 +92,16 @@ export class GuideComponent {
     modalRef.componentInstance.setMaterials({'img': "assets/img/iphone-general-about-3.jpg", 'description': "3. Go to \"About\" from available options"});
     modalRef.componentInstance.setMaterials({'img': "assets/img/iphone-about-result-4.jpg", 'description': "4. Scroll/Swipe down little to check \"Wi-Fi Address\" from available results"});
   }
-  open() {
+  openUbuntu() {
     const modalRef = this.modalService.open(GuideModalComponent, {size: 'lg'});
-    modalRef.componentInstance.title = "How to get Mac Address, Windows 10, Command Prompt";
-    modalRef.componentInstance.target = "Mac Mini";
-    modalRef.componentInstance.setMaterials({'img': "assets/img/win-cmd-from-search-1.jpg", 'description': "1. Search Command Prompt from Windows menu or Search"});
-    modalRef.componentInstance.setMaterials({'img': "assets/img/win-cmd-ipconfig-all-2.jpg", 'description': "2. Write \"ipconfig /all\" to get information"});
-    modalRef.componentInstance.setMaterials({'img': "assets/img/win-cmd-macAddress-result-3.jpg", 'description': "3. Go to \"Hardware\" from available options on the top then check the Mac Address"});
+    modalRef.componentInstance.title = "How to get Mac Address, Ubuntu, Terminal";
+    modalRef.componentInstance.target = "Ubuntu 18.04";
+    modalRef.componentInstance.setMaterials({'img': "assets/img/ubuntu-open-cmd-1.jpg", 'description': "1. Search \"Terminal\" from Menu or Search"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/ubuntu-cmd-ifconfig-2.jpg", 'description': "2 - 1. Write \"ifconfig | grep ether\" to get filtered information"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/ubuntu-cmd-ifconfig-result-3.jpg", 'description': "2 - 2. Check \"ether\" from result"});
+    modalRef.componentInstance.setMaterials({'img': "", 'description': "Or"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/ubuntu-cmd-ipaddr-4.jpg", 'description': "3 - 1. Write \"ip addr | grep ether\" to get filtered information"});
+    modalRef.componentInstance.setMaterials({'img': "assets/img/ubuntu-cmd-ipaddr-result-5.jpg", 'description': "3 - 2. Check \"ether\" from result"});
+
   }
 }

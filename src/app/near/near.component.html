@@ -34,7 +34,7 @@
       <div *ngIf="checkClicked && mapReady">
         <div><button class="btn btn-primary" (click)="goBack()" >Back</button></div>
         <app-map [clientMac]="clientMac" [imgSrc1]="imgSrc1" [imgSrc2]="imgSrc2" [imgSrc3]="imgSrc3" [isTileLvl]="isTileLvl" [type]="type" [title]="title"></app-map>
-      </div>
+       </div>
     </div>
     <div class="col-md-3">
       <app-guide *ngIf="guideOn"></app-guide>

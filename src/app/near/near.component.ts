@@ -22,7 +22,7 @@ export class NearComponent implements AfterViewInit {
   imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
   isTileLvl: boolean = false;
 
-  title: string = "Located by Meraki\nTracked with mac address in Sote Campus"
+  title: string = "Located by Meraki\nTracked with mac address in Sote Campus\nWho is near around"
 
   constructor(
     private dataService: DataService,
@@ -80,7 +80,7 @@ export class NearComponent implements AfterViewInit {
         window.alert("Given Mac address length is wrong");
     }
     else{
-      this.clientMac = macAddress;
+      this.clientMac = macAddress.toLocaleLowerCase();
       this.checkClicked = true;
       this.guideOn = false;
     }
