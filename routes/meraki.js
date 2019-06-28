@@ -40,12 +40,23 @@ router.get('/', function(req, res, next) {
     let limit = 100;
 
     if(req.query.limit){
-      limit = ParseInt(req.query.limit);
+      limit = parseInt(req.query.limit);
     }
 
     if(req.query.date_from && req.query.date_to){
       let startTime = getDateForQuery(req.query.date_from, 0);
       let endTime = getDateForQuery(req.query.date_to, 1);
+
+      query = {
+          "seenTime" : {
+            $gte: startTime,
+            $lt: endTime,
+          }
+      };
+    }
+    else if (req.query.delay){
+      let startTime = getTimestampAgo( parseInt(req.query.delay));
+      let endTime = getTimestampAgo(0);
 
       query = {
           "seenTime" : {

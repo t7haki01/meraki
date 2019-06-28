@@ -30,6 +30,14 @@ export class DataService {
     return this.http.get(this.apiUrl.get + "/lastseen/" + mac);
   }
 
+  get3Hours(): Observable<Object>{
+    let params = new HttpParams();
+    console.log(this.curDate());
+    params = params.append('delay', "3");
+    params = params.append('limit', "0");
+    return this.http.get(this.apiUrl.get, {params: params});
+  }
+
   getToday(): Observable<Object>{
     let params = new HttpParams();
     console.log(this.curDate());

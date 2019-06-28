@@ -93,7 +93,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
     else if(this.type === "heat"){
-      this.dataService.getToday().subscribe((res)=>{
+      this.dataService.get3Hours().subscribe((res)=>{
         this.data = res;
         console.log(this.data)
         if(this.data.length>0){
