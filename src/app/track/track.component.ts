@@ -97,6 +97,7 @@ export class TrackComponent implements AfterViewInit{
       this.date_to = (<HTMLInputElement>document.getElementById("date_to")).value;
 
       this.clientMac = macAddress;
+      console.log(this.clientMac)
       this.trackClicked = true;
       this.guideOn = false;
     }

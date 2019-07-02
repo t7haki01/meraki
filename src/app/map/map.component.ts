@@ -97,7 +97,6 @@ export class MapComponent implements OnInit, OnChanges {
     else if(this.type === "heat"){
       this.dataService.get3Hours().subscribe((res)=>{
         this.data = res;
-        console.log(this.data)
         if(this.data.length>0){
           this.map1.heatMaps(this.data, this.bingMap1, this.bingMap2, this.bingMap3);
         }

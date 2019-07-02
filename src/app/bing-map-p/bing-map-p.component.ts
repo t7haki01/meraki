@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MapLoaderService } from "../map-loader.service";
-import { Loader } from '../../modules/Loader.js';
 
 
 @Component({
@@ -14,7 +13,6 @@ export class BingMapPComponent implements OnInit {
 
   type:string = 'basic';
 
-
   imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
   imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
   imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
@@ -23,7 +21,7 @@ export class BingMapPComponent implements OnInit {
 
   title: string = "Located by Meraki";
 
-  subTitle: string = "Within a minute in Sote Campus"
+  subTitle: string = "Most recent devices up to 100, Within a minute in Sote Campus"
 
   constructor() {
     MapLoaderService.load().then( res => {

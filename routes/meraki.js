@@ -94,7 +94,7 @@ router.get('/:clientMac?', function(req, res, next){
         throw err;
       }
       var dbo = db.db(mongoDb.dbName);
-      var query = {};
+      var query = {"clientMac":req.params.clientMac};
 
       if(req.query){
         let startTime = getDateForQuery(req.query.date_from, 0);
@@ -105,7 +105,7 @@ router.get('/:clientMac?', function(req, res, next){
               $gte: startTime,
               $lt: endTime,
             },
-            clientMac: req.params.clientMac,
+            "clientMac": req.params.clientMac,
         };
       }
       
@@ -117,7 +117,7 @@ router.get('/:clientMac?', function(req, res, next){
             $gte: startTime,
             $lt: endTime,
           },
-          clientMac: req.params.clientMac
+          "clientMac": req.params.clientMac
         };
       }
       /**
@@ -129,8 +129,6 @@ router.get('/:clientMac?', function(req, res, next){
       */
       // var sort = {'_id': -1};
       var sort = {'seenTime': 1};
-
-      console.log("clientMac requested" , " and ", query);
 
       dbo.collection(mongoDb.collectionName).find(query).sort(sort).toArray(function(err,result){
         if(err){
@@ -206,6 +204,10 @@ function getDateForQuery(givenTime, ending){
   }
 
   let date = timeInFormat.getDate() + ending;
+
+  if(date<10){
+    date = "0" + date;
+  }
 
   let hr = "00";
 

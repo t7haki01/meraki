@@ -82,7 +82,7 @@ module.exports = class MongoDb{
                 if(data.length>1 && data !== null){
                     dbo.collection(collectionName).insertMany(obj, function(err, res) {
                         if (err){
-                            console.log("From line 64 ",err);
+                            console.log("From line 84 ",err);
                             throw err;
                         }
                        // console.log("Number of documents inserted: " + res.insertedCount);
@@ -93,7 +93,7 @@ module.exports = class MongoDb{
                 else if(data.length === 1 && data !== null){
                     dbo.collection(collectionName).insertOne(obj[0], function(err, res) {
                         if (err){
-                            console.log("From line 74 ",err);
+                            console.log("From line 96 ",err);
                             throw err;
                         }
                         console.log("1 document inserted");
@@ -173,7 +173,7 @@ module.exports = class MongoDb{
         let tomorrow = getDateForQuery(0,0,-1,0);
         let query ={
             "seenTime":{
-              $gte: aMonthAgo,
+              $gte: tomorrow,
             }
         };
         MongoClient.connect(this.url, function(err, db){
@@ -233,6 +233,10 @@ function getDateForQuery(yrAgo, monAgo, dateAgo, hrAgo){
   
     let date = timeInFormat.getDate();
     date = date - dateAgo;
+
+    if(date<10){
+        date = "0" + date;
+    }
   
     let hr = timeInFormat.getHours();
     hr = hr - hrAgo;
