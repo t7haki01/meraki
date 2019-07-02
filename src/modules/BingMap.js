@@ -245,13 +245,20 @@ export default class BingMap{
             }
         }
       }
-      var infobox1 = new Microsoft.Maps.Infobox(pushPins1[0].getLocation(), { visible: false, autoAlignment: true });
-      infobox1.setMap(map1);
-      var infobox2 = new Microsoft.Maps.Infobox(pushPins2[0].getLocation(), { visible: false, autoAlignment: true });
-      infobox2.setMap(map2);
-      var infobox3 = new Microsoft.Maps.Infobox(pushPins3[0].getLocation(), { visible: false, autoAlignment: true });
-      infobox3.setMap(map3);
-      
+
+      if(pushPins1.length>0 && pushPins1[0]){
+        var infobox1 = new Microsoft.Maps.Infobox(pushPins1[0].getLocation(), { visible: false, autoAlignment: true });
+        infobox1.setMap(map1);
+      }
+      if(pushPins2.length>0 && pushPins2[0]){
+        var infobox2 = new Microsoft.Maps.Infobox(pushPins2[0].getLocation(), { visible: false, autoAlignment: true });
+        infobox2.setMap(map2);
+      }
+      if(pushPins3.length>0 && pushPins3[0]){
+        var infobox3 = new Microsoft.Maps.Infobox(pushPins3[0].getLocation(), { visible: false, autoAlignment: true });
+        infobox3.setMap(map3);
+      }
+
       map1.entities.push(pushPins1);
       map2.entities.push(pushPins2);
       map3.entities.push(pushPins3);
@@ -260,6 +267,7 @@ export default class BingMap{
         var polyline1 = new Microsoft.Maps.Polyline(polyArray1, null);
         var polyline2 = new Microsoft.Maps.Polyline(polyArray2, null);
         var polyline3 = new Microsoft.Maps.Polyline(polyArray3, null);
+
         map1.entities.push(polyline1);
         map2.entities.push(polyline2);
         map3.entities.push(polyline3);
