@@ -9,15 +9,15 @@ import { MapLoaderService } from "../map-loader.service";
 })
 export class BingMapPComponent implements OnInit {
 
-  mapReady:boolean = false;
+  mapReady = false;
 
-  type:string = 'basic';
-
+  
   imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
   imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
   imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
-
-  isTileLvl: boolean = false;
+  
+  type:string = 'basic';
+  isTileLvl: boolean = true;
 
   title: string = "Located by Meraki";
 
@@ -26,7 +26,7 @@ export class BingMapPComponent implements OnInit {
   constructor() {
     MapLoaderService.load().then( res => {
       console.log('BingmapLoader.load.then ', res);
-      this.mapReady = true;
+        this.mapReady = true;
     })
   }
 

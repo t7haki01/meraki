@@ -62,7 +62,6 @@ export class MapComponent implements OnInit, OnChanges {
     console.log("From map component, ngOnInit and typeof Microsoft: ", typeof Microsoft);
     if(typeof Microsoft !== 'undefined'){
       console.log('BingMapComponent.ngOnInit');
-      console.log(Loader.getReady());
       this.getMap();
     }
   }

@@ -31,6 +31,6 @@ export class MapLoaderService {
       }
 
       // Always return promise. When 'load' is called many times, the promise is already resolved.
-      return MapLoaderService.promise;
+        return MapLoaderService.promise;
   }
 }

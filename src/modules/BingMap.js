@@ -15,14 +15,13 @@ export default class BingMap{
     )
     {
       this.bounds = [ new Microsoft.Maps.Location(bounds[0], bounds[1]), new Microsoft.Maps.Location(bounds[2], bounds[3]) ];
-      this.maxBounds = [ new Microsoft.Maps.Location(bounds[0]+1, bounds[1]+1), new Microsoft.Maps.Location(bounds[2]+1, bounds[3]+1) ];
       this.element = element;
       this.imgSrc = imgSrc;
       this.center = center;
+      // this.maxBounds = [ new Microsoft.Maps.Location(bounds[0]+1, bounds[1]+1), new Microsoft.Maps.Location(bounds[2]+1, bounds[3]+1) ];
       this.loader = Loader;
     }
     getBingMap(){
-      this.loader.setReady(false);
       var map = new Microsoft.Maps.Map(this.element, {
         center: new Microsoft.Maps.Location(this.center[0], this.center[1]),
         credentials: apiKey,
@@ -36,7 +35,6 @@ export default class BingMap{
       });
 
       var img;
-      var loader = this.loader;
 
       // Define custom constructor for the overlay 
       function TopographicOverlay(bounds, image) {
@@ -86,7 +84,6 @@ export default class BingMap{
             img.style.width = (bottomRight.x - topLeft.x) + 'px';
             img.style.height = (bottomRight.y - topLeft.y) + 'px';
         }
-        loader.setReady(true);
       }
 
       return map;
@@ -341,9 +338,6 @@ export default class BingMap{
   getBingMapTileLvl(){
     return GetMap(this.bounds, this.element, this.center, this.imgSrc);
   }
-
-
-
 
 }//end of Bingmap class
 
