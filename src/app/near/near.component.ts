@@ -25,9 +25,9 @@ export class NearComponent implements AfterViewInit {
 
   title: string = "Located by Meraki";
   
-  subTitle: string = "Where am i? Who is around?";
+  subTitle: string = "Where? What Devices were around?";
   
-  description: string = "within 20m, loacted within a minute, in same floor";
+  description: string = "Detected devices within 20m, +/- 1 minute, Same Floor";
 
   constructor(
     private dataService: DataService,
@@ -47,18 +47,32 @@ export class NearComponent implements AfterViewInit {
     for(var i = 1; i<7;i++){
         var idTag = "mac"+i, nextId = "mac"+(i+1);
         let inputValue = (<HTMLInputElement>document.getElementById(idTag)).value;
-        if(inputValue.length > 2){
-          if(i===6){
-            (<HTMLInputElement>document.getElementById('btn')).focus();
-          }else{
-              (<HTMLInputElement>document.getElementById(idTag)).value = inputValue.substr(0.2);
-              (<HTMLInputElement>document.getElementById(nextId)).value = inputValue.substr(2.4);
-          }          
+        if(inputValue.length<2){
+          return ;
         }
-        else if(inputValue.length === 2){
-            if(i===6){
+        else if(inputValue.length > 2){
+          if(i == 6){
+            (<HTMLInputElement>document.getElementById(idTag)).value = inputValue.substr(0,2);
+            (<HTMLInputElement>document.getElementById('btn')).focus();
+          }
+          else{
+
+            while(inputValue.includes(":")){
+              inputValue = inputValue.replace(":","");
+            }
+            for(var j = i; j <7; j++){
+              var id = "mac"+j ;
+              var curInput = (<HTMLInputElement>document.getElementById(id));
+              curInput.value = inputValue.substr(0,2);
+              inputValue = inputValue.substr(2,inputValue.length-1);
+            }
+          }
+        }
+        else if(inputValue.length == 2){
+            if(i == 6){
               (<HTMLInputElement>document.getElementById('btn')).focus();
-            }else{
+            }
+            else{
                 (<HTMLInputElement>document.getElementById(nextId)).focus();
             }
         }

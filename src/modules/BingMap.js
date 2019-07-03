@@ -19,7 +19,6 @@ export default class BingMap{
       this.imgSrc = imgSrc;
       this.center = center;
       // this.maxBounds = [ new Microsoft.Maps.Location(bounds[0]+1, bounds[1]+1), new Microsoft.Maps.Location(bounds[2]+1, bounds[3]+1) ];
-      this.loader = Loader;
     }
     getBingMap(){
       var map = new Microsoft.Maps.Map(this.element, {

@@ -50,18 +50,32 @@ export class TrackComponent implements AfterViewInit{
     for(var i = 1; i<7;i++){
         var idTag = "mac"+i, nextId = "mac"+(i+1);
         let inputValue = (<HTMLInputElement>document.getElementById(idTag)).value;
-        if(inputValue.length > 2){
-          if(i===6){
-            (<HTMLInputElement>document.getElementById('btn')).focus();
-          }else{
-              (<HTMLInputElement>document.getElementById(idTag)).value = inputValue.substr(0.2);
-              (<HTMLInputElement>document.getElementById(nextId)).value = inputValue.substr(2.4);
-          }          
+        if(inputValue.length<2){
+          return ;
         }
-        else if(inputValue.length === 2){
-            if(i===6){
+        else if(inputValue.length > 2){
+          if(i == 6){
+            (<HTMLInputElement>document.getElementById(idTag)).value = inputValue.substr(0,2);
+            (<HTMLInputElement>document.getElementById('btn')).focus();
+          }
+          else{
+
+            while(inputValue.includes(":")){
+              inputValue = inputValue.replace(":","");
+            }
+            for(var j = i; j <7; j++){
+              var id = "mac"+j ;
+              var curInput = (<HTMLInputElement>document.getElementById(id));
+              curInput.value = inputValue.substr(0,2);
+              inputValue = inputValue.substr(2,inputValue.length-1);
+            }
+          }
+        }
+        else if(inputValue.length == 2){
+            if(i == 6){
               (<HTMLInputElement>document.getElementById('btn')).focus();
-            }else{
+            }
+            else{
                 (<HTMLInputElement>document.getElementById(nextId)).focus();
             }
         }
@@ -97,7 +111,7 @@ export class TrackComponent implements AfterViewInit{
       this.date_to = (<HTMLInputElement>document.getElementById("date_to")).value;
 
       this.clientMac = macAddress;
-      console.log(this.clientMac)
+
       this.trackClicked = true;
       this.guideOn = false;
     }
@@ -120,21 +134,12 @@ export class TrackComponent implements AfterViewInit{
     this.guideOn = true;
     this.data = [];
     this.trackClicked = false;
-    this.mapReady;
+
     this.clientMac;
+
     this.date_from;
     this.date_to;
   
-    this.type = "track";
-  
-    this.imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
-    this.imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
-    this.imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
-    this.isTileLvl = true;
-  
-    this.title = "Located by Meraki, tracked with mac address in Sote Campus"
-  
-    this.today = this.getToday();
   }
 
 }

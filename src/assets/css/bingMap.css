@@ -1,5 +1,5 @@
 @import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
-
+ 
 .map-double-size{
     width: 1650px;
     height: 700px;
@@ -23,7 +23,7 @@
 
 .map-small-size{
     width: 480px;
-    height: 520px;
+    height: 560px;
 }
 
 .margin-bottom-little{
