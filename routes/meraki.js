@@ -3,6 +3,7 @@ var router = express.Router();
 const MongoDb = require('../modules/MongoDb.js');
 const mongoDb = new MongoDb();
 const MongoClient = require('mongodb').MongoClient;
+const meraki = require('../models/meraki.js');
 
 router.get('/all', function(req, res, next) {
 
@@ -15,7 +16,13 @@ router.get('/all', function(req, res, next) {
     var dbo = db.db(mongoDb.dbName);
     let query = {};
 
-    dbo.collection(mongoDb.collectionName).find(query).limit(100).toArray(function(err,result){
+    let limit = 500;
+
+    if(req.query.limit){
+      limit = parseInt(req.query.limit);
+    }
+
+    dbo.collection(mongoDb.collectionName).find(query).limit(limit).toArray(function(err,result){
       if(err){
         console.log(err);
         throw err;
@@ -54,6 +61,7 @@ router.get('/', function(req, res, next) {
           }
       };
     }
+
     else if (req.query.delay){
       let startTime = getTimestampAgo( parseInt(req.query.delay));
       let endTime = getTimestampAgo(0);
@@ -94,31 +102,34 @@ router.get('/:clientMac?', function(req, res, next){
         throw err;
       }
       var dbo = db.db(mongoDb.dbName);
-      var query = {"clientMac":req.params.clientMac};
 
-      if(req.query){
+      var query = {};
+      if(req.params.clientMac){
+        query = {"clientMac":req.params.clientMac};
+      }
+
+      if(req.query.date_from && req.query.date_to){
         let startTime = getDateForQuery(req.query.date_from, 0);
         let endTime = getDateForQuery(req.query.date_to, 1);
-  
-        query = {
-            "seenTime" : {
-              $gte: startTime,
-              $lt: endTime,
-            },
-            "clientMac": req.params.clientMac,
-        };
+ 
+        Object.assign({
+          "seenTime" : {
+            $gte: startTime,
+            $lt: endTime,
+          }
+        }, query);        
       }
       
       else{
         let startTime = getDateForQuery("", 0);
         let endTime = getDateForQuery("", 1);
-        query = {
+
+        Object.assign({
           "seenTime" : {
             $gte: startTime,
             $lt: endTime,
-          },
-          "clientMac": req.params.clientMac
-        };
+          }
+        }, query);
       }
       /**
         '-1' for descending order, 
@@ -148,17 +159,23 @@ router.get('/lastseen/:clientMac?', function(req, res, next){
         throw err;
       }
       var dbo = db.db(mongoDb.dbName);
-      var query = {clientMac: req.params.clientMac};
-      var sort = {'_id': -1};
+      var query = {};
+      if(req.params.clientMac){
+        var query = {clientMac: req.params.clientMac};
+        var sort = {'_id': -1};
 
-      dbo.collection(mongoDb.collectionName).find(query).sort(sort).limit(1).toArray(function(err,result){
-        if(err){
-          console.log(err);
-          throw err;
-        }
-        res.json(result);
-        db.close();
-      });
+        dbo.collection(mongoDb.collectionName).find(query).sort(sort).limit(1).toArray(function(err,result){
+          if(err){
+            console.log(err);
+            throw err;
+          }
+          res.json(result);
+          db.close();
+        });
+      }
+      else{
+       res.send("No any cleintMac specified!"); 
+      }
     });
 });
 

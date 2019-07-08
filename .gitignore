@@ -50,3 +50,4 @@ Thumbs.db
 /src/assets/settings.js
 /confidentials&settings/settings.json
 proxy.conf.json
+/models
