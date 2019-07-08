@@ -12,7 +12,10 @@ router.get('/all', function(req, res, next) {
       throw err;
     }
 
+    var sort = {};
+
     var dbo = db.db(mongoDb.dbName);
+
     let query = {};
 
     let limit = 500;
@@ -21,7 +24,16 @@ router.get('/all', function(req, res, next) {
       limit = parseInt(req.query.limit);
     }
 
-    dbo.collection(mongoDb.collectionName).find(query).limit(limit).toArray(function(err,result){
+    if(req.query.sort){
+      if(sort === parseInt(1)){
+        var sort = {'seenTime': 1};
+      }
+      else{
+        var sort = {'seenTime': -1};
+      }
+    }
+
+    dbo.collection(mongoDb.collectionName).find(query).limit(limit).sort(sort).toArray(function(err,result){
       if(err){
         console.log(err);
         throw err;
@@ -102,6 +114,12 @@ router.get('/:clientMac?', function(req, res, next){
       }
       var dbo = db.db(mongoDb.dbName);
 
+      var limit = 0;
+
+      if(req.query.limit){
+        limit = req.query.limit;
+      }
+
       var query = {};
       if(req.params.clientMac){
         query = {"clientMac":req.params.clientMac};
@@ -134,13 +152,16 @@ router.get('/:clientMac?', function(req, res, next){
         '-1' for descending order, 
         '1' for ascending order,
         since mongoDb created '_id' itself by time, it could be used for sorting order by timestamp
-        theoretically but weird behaviour observed 24.5.2019 - need to take a look more into
-        so currently sort by seenTime which is timestamp / UTC time still
       */
       // var sort = {'_id': -1};
       var sort = {'seenTime': 1};
+      if(req.query.sort){
+        if(parseInt(req.query.sort) == -1){
+          sort = {'seenTime': -1};
+        }
+      }
 
-      dbo.collection(mongoDb.collectionName).find(query).sort(sort).toArray(function(err,result){
+      dbo.collection(mongoDb.collectionName).find(query).sort(sort).limit(limit).toArray(function(err,result){
         if(err){
           console.log(err);
           throw err;
@@ -159,23 +180,18 @@ router.get('/lastseen/:clientMac?', function(req, res, next){
       }
       var dbo = db.db(mongoDb.dbName);
       var query = {};
-      if(req.params.clientMac){
-        var query = {clientMac: req.params.clientMac};
-        var sort = {'_id': -1};
+      var query = {clientMac: req.params.clientMac};
+      var sort = {'_id': -1};
 
-        dbo.collection(mongoDb.collectionName).find(query).sort(sort).limit(1).toArray(function(err,result){
-          if(err){
-            console.log(err);
-            throw err;
-          }
-          res.json(result);
-          db.close();
-        });
-      }
-      else{
-       res.send("No any cleintMac specified!"); 
-      }
-    });
+      dbo.collection(mongoDb.collectionName).find(query).sort(sort).limit(1).toArray(function(err,result){
+        if(err){
+          console.log(err);
+          throw err;
+        }
+        res.json(result);
+        db.close();
+      });
+  });
 });
 
 module.exports = router;
