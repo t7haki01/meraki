@@ -66,7 +66,6 @@ app.use(session({
         secure: true,
         httpOnly: true,
         domain: session_setting.domain,
-        path: session_setting.path,
         expires: expiryDate
     }
 }))

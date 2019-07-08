@@ -3,7 +3,6 @@ var router = express.Router();
 const MongoDb = require('../modules/MongoDb.js');
 const mongoDb = new MongoDb();
 const MongoClient = require('mongodb').MongoClient;
-const meraki = require('../models/meraki.js');
 
 router.get('/all', function(req, res, next) {
 
