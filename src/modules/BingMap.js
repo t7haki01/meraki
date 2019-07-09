@@ -140,7 +140,22 @@ export default class BingMap{
         if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
             var loc = new Microsoft.Maps.Location(
             parseFloat(data[i].lat), parseFloat(data[i].lng));
+            
             var pin = new Microsoft.Maps.Pushpin(loc);
+          
+            if(i===0 && polyLine){
+              pin = new Microsoft.Maps.Pushpin(loc,{
+                text:"Very First", 
+                color: "red",
+              });
+            }
+ 
+            if(i===(data.length-1) && polyLine){
+              pin = new Microsoft.Maps.Pushpin(loc,{
+                text:"Very Last", 
+                color: "red",
+              });
+            }
             
             if(data[i].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || data[i].apFloors == "[\"Kontinkangas-Honka-1krs\"]" 
                 || data[i].apFloors == "[\"Kontinkangas-Paasi-1krs\"]" || data[i].apFloors == "[]"){
@@ -159,10 +174,10 @@ export default class BingMap{
                               + "seenTime: " + data[i].seenTime + "<br/>"
                               + "Latitude: " + data[i].lat + "<br/>"
                               + "Longitude: " + data[i].lng + "<br/>"
-                              + "Uncertainty: " + data[i].lat + " m" + "<br/>"
+                              + "Uncertainty: " + data[i].unc + " m" + "<br/>"
                               + "Ap Floor: " + data[i].apFloors + "<br/>"
                               + "RSSI: " + data[i].rssi + "<br/>"
-                              + "seenEpoch: " + data[i].seenEpoch + " s" + "<br/>"
+                              + "Type: " + data[i].type
                   };
                   Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
                       infobox1.setOptions({ 
@@ -191,10 +206,10 @@ export default class BingMap{
                             + "seenTime: " + data[i].seenTime + "<br/>"
                             + "Latitude: " + data[i].lat + "<br/>"
                             + "Longitude: " + data[i].lng + "<br/>"
-                            + "Uncertainty: " + data[i].lat + " m" + "<br/>"
+                            + "Uncertainty: " + data[i].unc + " m" + "<br/>"
                             + "Ap Floor: " + data[i].apFloors + "<br/>"
                             + "RSSI: " + data[i].rssi + "<br/>"
-                            + "seenEpoch: " + data[i].seenEpoch + " s" + "<br/>"
+                            + "Type: " + data[i].type
                 };
                 Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
                     infobox2.setOptions({ 
@@ -224,10 +239,10 @@ export default class BingMap{
                             + "seenTime: " + data[i].seenTime + "<br/>"
                             + "Latitude: " + data[i].lat + "<br/>"
                             + "Longitude: " + data[i].lng + "<br/>"
-                            + "Uncertainty: " + data[i].lat + " m" + "<br/>"
+                            + "Uncertainty: " + data[i].unc + " m" + "<br/>"
                             + "Ap Floor: " + data[i].apFloors + "<br/>"
                             + "RSSI: " + data[i].rssi + "<br/>"
-                            + "seenEpoch: " + data[i].seenEpoch + " s" + "<br/>"
+                            + "Type: " + data[i].type
                 };
                 Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => {
                     infobox3.setOptions({ 
@@ -286,15 +301,13 @@ export default class BingMap{
     var clientPin = new Microsoft.Maps.Pushpin(clientLoc,{
       text:"YOU", 
       color: "red",
-      // title: client[0].clientMac, 
-      // subTitle: client[0].seenTime + "\n"
-      // + "("+client[0].lat + "," + client[0].lng + ")", 
     });
 
     var infobox = new Microsoft.Maps.Infobox(clientLoc,{ 
       title: client[0].clientMac, 
       description: client[0].seenTime + "<br/>"
-      + "("+client[0].lat + "," + client[0].lng + ")", 
+      + "("+client[0].lat + "," + client[0].lng + ")" + 
+      "<br/>" + "Uncertainty: " + client[0].unc + " m", 
       visible: false 
     });
 
@@ -483,7 +496,7 @@ function addInfoBoxHandler(pin, data){
                   + "seenTime: " + data.seenTime + "<br/>"
                   + "Latitude: " + data.lat + "<br/>"
                   + "Longitude: " + data.lng + "<br/>"
-                  + "Uncertainty: " + data.lat + " m" + "<br/>"
+                  + "Uncertainty: " + data.unc + " m" + "<br/>"
                   + "Ap Floor: " + data.apFloors + "<br/>"
                   + "RSSI: " + data.rssi + "<br/>"
                   + "seenEpoch: " + data.seenEpoch + " s" + "<br/>"

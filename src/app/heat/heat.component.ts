@@ -17,8 +17,9 @@ export class HeatComponent implements OnInit {
   type:string = "heat";
   isTileLvl: boolean = true;
 
-  title: string = "HeatMap, Located by Meraki";
-  subTitle: string  = "Check the most located area in Sote Campus, past 3 hours";
+  title: string = "Located by Meraki";
+  subTitle: string  = "HeatMap, Sote Campus";
+  description: string  = "Check the most frequently detected area, in the last 5 Minutes";
 
   constructor(){
     MapLoaderService.load().then( res => {

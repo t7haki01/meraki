@@ -25,9 +25,11 @@ export class TrackComponent implements AfterViewInit{
   imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
   isTileLvl: boolean = true;
 
-  title: string = "Located by Meraki"
+  title: string = "Located by Meraki";
 
-  subTitle: string ="Tracked with mac address in Sote Campus"
+  subTitle: string ="Tracked with \"Mac Address\" in Sote Campus";
+
+  description: string ="Check how meraki detected your device";
 
   today = this.getToday();
 

@@ -23,7 +23,6 @@ export class DataService {
   }
 
   getRecent(): Observable<Object>{
-    console.log(this.apiUrl.origin);
     console.log(this.apiUrl.href);
     return this.http.get(this.apiUrl.get);
   }
@@ -32,17 +31,15 @@ export class DataService {
     return this.http.get(this.apiUrl.get + "/lastseen/" + mac);
   }
 
-  get3Hours(): Observable<Object>{
+  getHeat(): Observable<Object>{
     let params = new HttpParams();
-    console.log(this.curDate());
-    params = params.append('delay', "3");
+    params = params.append('delay', "5");
     params = params.append('limit', "0");
     return this.http.get(this.apiUrl.get, {params: params});
   }
 
   getToday(): Observable<Object>{
     let params = new HttpParams();
-    console.log(this.curDate());
     params = params.append('date_from', this.curDate());
     params = params.append('date_to', this.curDate());
     params = params.append('limit', "0");

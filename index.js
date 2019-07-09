@@ -15,6 +15,8 @@ var cors = require('cors');
 /**
  * For the cors policy, lazy implementation which is not including header
  * separately, using one dependency "cors"
+ * 
+ * Remember to get rid of this in production
  */
 app.use(cors());
 

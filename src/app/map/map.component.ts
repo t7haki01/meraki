@@ -47,6 +47,8 @@ export class MapComponent implements OnInit, OnChanges {
   
   @Input() description: string;
 
+  @Input() info: string;
+
   @Input() date_from;
   @Input() date_to;
 
@@ -94,7 +96,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
     else if(this.type === "heat"){
-      this.dataService.get3Hours().subscribe((res)=>{
+      this.dataService.getHeat().subscribe((res)=>{
         this.data = res;
         if(this.data.length>0){
           this.map1.heatMaps(this.data, this.bingMap1, this.bingMap2, this.bingMap3);

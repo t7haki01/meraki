@@ -1,18 +1,3 @@
 @import '../../assets/css/bingMap.css';
+@import '../../assets/css/font.css';
 @import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
-
-.time-font{
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.franklin-font{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-}
-
-.cursive-font{
-    font-family: cursive;
-}
-
-.courier-font{
-    font-family: 'Courier New', Courier, monospace;
-}

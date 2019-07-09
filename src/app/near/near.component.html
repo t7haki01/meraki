@@ -4,7 +4,9 @@
       <div *ngIf="!checkClicked" class="row">
         <div class="row">
           <div class="col">
-            <h5>Check with Mac Address, Where?/When?/Which devices were around?, When own device was last detected</h5>
+            <h2 *ngIf="title" class="cursive-font">{{title}}</h2>
+            <p *ngIf="subTitle" class="lead">{{subTitle}}</p>
+            <p *ngIf="description" class="courier-font">{{description}}</p>
           </div>
         </div>
         <div class="row input-group margin-little-bottom">
@@ -36,7 +38,7 @@
         <app-map [clientMac]="clientMac" [imgSrc1]="imgSrc1" 
         [imgSrc2]="imgSrc2" [imgSrc3]="imgSrc3" [isTileLvl]="isTileLvl" 
         [type]="type" [title]="title" [subTitle]="subTitle"
-        [description]="description"></app-map>
+        [description]="description" [info]="info"></app-map>
        </div>
     </div>
     <div class="col-md-3">

@@ -25,9 +25,11 @@ export class NearComponent implements AfterViewInit {
 
   title: string = "Located by Meraki";
   
-  subTitle: string = "Where? What Devices were around?";
+  subTitle: string = "Check with \"Mac Address\"";
   
-  description: string = "Detected devices within 20m, +/- 1 minute, Same Floor";
+  description: string = "Where?/When?/Which devices were around?, When own device was last detected";
+
+  info: string = "Detected device(s) within 20m, +/- 1 minute, Same Floor";
 
   constructor(
     private dataService: DataService,
