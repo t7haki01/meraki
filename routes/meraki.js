@@ -74,8 +74,8 @@ router.get('/', function(req, res, next) {
     }
 
     else if (req.query.delay){
-      let startTime = getTimestampAgo( parseInt(req.query.delay));
-      let endTime = getTimestampAgo(0);
+      let startTime = getTimestampAgo( null, parseInt(req.query.delay) );
+      let endTime = getTimestampAgo(null, null);
 
       query = {
           "seenTime" : {
@@ -85,8 +85,8 @@ router.get('/', function(req, res, next) {
       };
     }
     else{
-      let timeLimit = getTimestampAgo(1);
-      let cur = getTimestampAgo(0);
+      let timeLimit = getTimestampAgo(1, null);
+      let cur = getTimestampAgo(0, null);
       query = {
           "seenTime" : {
             $gte: timeLimit,
@@ -196,7 +196,7 @@ router.get('/lastseen/:clientMac?', function(req, res, next){
 
 module.exports = router;
 
-function getTimestampAgo(delay){
+function getTimestampAgo(delayMin, delayHr){
   let now = new Date();
   let yr = now.getFullYear();
   let mon = now.getMonth() + 1;
@@ -207,14 +207,25 @@ function getTimestampAgo(delay){
   if(date<10){
     date = "0" + date;
   }
+
   let hr = now.getHours();
+  if(delayHr){
+    hr = hr - delayHr;
+  }
   if(hr<10){
     hr = "0" + hr;
   }
-  let min = now.getMinutes()-delay;
+
+  let min = now.getMinutes();
+  if(delayMin){
+    min = min - delayMin;
+  }
+
   if(min<10) min = "0" + min;
+
   let sec = now.getSeconds();
   if(sec<10) sec = "0" + sec;
+
   let timestamp = yr + "-" + mon + "-" + date + "T" + hr + ":" + min + ":" + sec + "Z";
   return timestamp;
 }
