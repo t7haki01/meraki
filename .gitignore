@@ -51,3 +51,4 @@ Thumbs.db
 /confidentials&settings/settings.json
 proxy.conf.json
 /models
+.snyk

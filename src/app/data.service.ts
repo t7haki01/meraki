@@ -23,6 +23,8 @@ export class DataService {
   }
 
   getRecent(): Observable<Object>{
+    console.log(this.apiUrl.origin);
+    console.log(this.apiUrl.href);
     return this.http.get(this.apiUrl.get);
   }
 

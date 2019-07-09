@@ -22,7 +22,7 @@ module.exports = class MongoDb{
 
         // var url = "mongodb://127.0.0.1:27017/" + dbName;
 
-        MongoClient.connect(this.url + dbName, function(err, db) {
+        MongoClient.connect(this.url + dbName, {useNewUrlParser: true}, function(err, db) {
           if (err){
             console.log(err);
             throw err;
@@ -42,7 +42,7 @@ module.exports = class MongoDb{
         //127.0.0.1 can be replaced with localhost
         // var url = "mongodb://127.0.0.1:27017/";
 
-        MongoClient.connect(this.url, function(err, db) {
+        MongoClient.connect(this.url, {useNewUrlParser: true}, function(err, db) {
             if (err){
                 console.log(err);
                 throw err;
@@ -70,7 +70,7 @@ module.exports = class MongoDb{
             collectionName = this.collectionName;
         }
 
-        MongoClient.connect(this.url, function(err, db) {
+        MongoClient.connect(this.url, {useNewUrlParser: true}, function(err, db) {
             if (err){
                 console.log(err);
                 throw err;
@@ -148,7 +148,7 @@ module.exports = class MongoDb{
               $lt: aMonthAgo,
             }
         };
-        MongoClient.connect(this.url, function(err, db){
+        MongoClient.connect(this.url, {useNewUrlParser: true}, function(err, db){
             if(err){
                 console.log(err);
                 throw err;
@@ -176,7 +176,7 @@ module.exports = class MongoDb{
               $gte: tomorrow,
             }
         };
-        MongoClient.connect(this.url, function(err, db){
+        MongoClient.connect(this.url, {useNewUrlParser: true}, function(err, db){
             if(err){
                 console.log(err);
                 throw err;

@@ -21,7 +21,6 @@ app.use(cors());
 
 /**From here. making api secure */
 
-
 /**
  * Attackers can use this header (which is enabled by default) to detect apps running Express and then launch specifically-targeted attacks.
  * from https://expressjs.com/en/advanced/best-practice-security.html
@@ -29,6 +28,7 @@ app.use(cors());
 // since i will use helmet, no need to duplicating "x-powered-by" hiding for preventing attack
 // but for the purpose of learning, let here be with commenting
 // when not using helmet, minimum security option can be "disabled" x-powered-by
+
 // app.disable('x-powered-by');
 
 /**
@@ -66,6 +66,7 @@ app.use(session({
         secure: true,
         httpOnly: true,
         domain: session_setting.domain,
+        path: session_setting.path,
         expires: expiryDate
     }
 }))
@@ -126,7 +127,7 @@ app.post(route, function(req, res) {
                 mongoDb.deleteNonsense();
             }
         }
-        // Here was the part saving data from posting from meraki server
+        // Here was the part saving data in MySQL
         //        mysqlDb.insertToDb(req.body);
     } 
     else {
