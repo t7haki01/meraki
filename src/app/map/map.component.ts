@@ -1,12 +1,9 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { DataService } from '../data.service';
-import { BingmapService } from '../bingmap.service';
 
 import setting from '../../assets/settings.js';
 import BingMap from '../../modules/BingMap.js';
-
-import Loader from '../../modules/Loader.js';
 
 const Microsoft: any = null;
 
@@ -56,8 +53,7 @@ export class MapComponent implements OnInit, OnChanges {
   private data: any = [];
 
   constructor(
-    private dataService: DataService,
-    private bingmapService: BingmapService,
+    private dataService: DataService
   ){}
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { MapLoaderService } from '../map-loader.service';
 

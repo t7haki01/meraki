@@ -74,7 +74,7 @@ router.get('/', function(req, res, next) {
     }
 
     else if (req.query.delay){
-      let startTime = getTimestampAgo( null, parseInt(req.query.delay) );
+      let startTime = getTimestampAgo( parseInt(req.query.delay), null );
       let endTime = getTimestampAgo(null, null);
 
       query = {

@@ -35,6 +35,7 @@
     "express": "^4.17.1",
     "express-limiter": "^1.6.1",
     "helmet": "^3.18.0",
+    "http-server": "^0.11.1",
     "mongodb": "^3.2.7",
     "mysql": "^2.17.1",
     "ngx-bootstrap": "^4.2.0",
