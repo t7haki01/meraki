@@ -3,15 +3,17 @@
     <p *ngIf="subTitle" class="lead">{{subTitle}}</p>
     <p *ngIf="description" class="courier-font">{{description}}</p>
     <p *ngIf="info" class="info-font">{{info}}</p>
-    <div class="map-double-size">
-        <div class="map-single-size inline">
-            <div id="myMap1"></div>
+    <div class="">
+        <div class="row map-double-size sm-size-sc">
+            <div class="map-single-size inline margin-little-bottom-in-sm">
+                <div id="myMap1"></div>
+            </div>
+            <div class="map-single-size-sm inline margin-left-little margin-little-bottom-in-sm">
+                <div id="myMap2"></div>
+            </div>
         </div>
-        <div class="map-single-size-sm inline margin-left-little">
-            <div id="myMap2"></div>
+        <div class="row sm-size-sc">
+            <div class="map-small-size position-relative margin-bottom-little margin-left-little" id="myMap3"></div>
         </div>
-    </div>
-    <div>
-        <div class="map-small-size position-relative margin-bottom-little margin-left-little" id="myMap3"></div>
     </div>
 </div>

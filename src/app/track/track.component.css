@@ -12,3 +12,14 @@
 .margin-little-bottom{
     margin-bottom: 10px;
 }
+
+@media (max-width: 400px){
+    .input-small-sc{
+            display: inline;
+            text-align: center;
+    }
+
+    .margin-little-top{
+        margin-top: 10px;
+    }
+}
