@@ -17,7 +17,7 @@ export class BingMapPComponent implements OnInit {
   imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
   
   type:string = 'basic';
-  isTileLvl: boolean = true;
+  isTileLvl: boolean = false;
 
   title: string = "Located by Meraki";
 

@@ -1,9 +1,8 @@
 import setting from '../assets/settings.js';
-import Loader from './Loader.js';
-
 
 const apiKey = setting.bing.apiKey;
 
+var variable = 40;
 
 export default class BingMap{
   
@@ -18,9 +17,10 @@ export default class BingMap{
       this.element = element;
       this.imgSrc = imgSrc;
       this.center = center;
-      // this.maxBounds = [ new Microsoft.Maps.Location(bounds[0]+1, bounds[1]+1), new Microsoft.Maps.Location(bounds[2]+1, bounds[3]+1) ];
+      this.maxBounds = bounds;
     }
     getBingMap(){
+      var maxBounds = Microsoft.Maps.LocationRect.fromLocations(new Microsoft.Maps.Location(this.maxBounds[0], this.maxBounds[1]), new Microsoft.Maps.Location(this.maxBounds[2], this.maxBounds[3]));
       var map = new Microsoft.Maps.Map(this.element, {
         center: new Microsoft.Maps.Location(this.center[0], this.center[1]),
         credentials: apiKey,
@@ -29,8 +29,8 @@ export default class BingMap{
         showMapTypeSelector: false,
         showLocateMeButton: false,
         minZoom: 18,
+        maxBounds: maxBounds
         // mapTypeId: Microsoft.Maps.MapTypeId.aerial,
-        // maxBounds: this.maxBounds
       });
 
       var img;
@@ -356,13 +356,14 @@ export default class BingMap{
   }
 
   getBingMapTileLvl(){
-    return GetMap(this.bounds, this.element, this.center, this.imgSrc);
+    return GetMap(this.bounds, this.element, this.center, this.imgSrc, this.maxBounds);
   }
 
 }//end of Bingmap class
 
 
-function GetMap(bound, el, center, imgSrc) {
+function GetMap(bound, el, center, imgSrc, max) {
+    var maxBounds = Microsoft.Maps.LocationRect.fromLocations(new Microsoft.Maps.Location(max[0], max[1]), new Microsoft.Maps.Location(max[2], max[3]));
     var bounds = Microsoft.Maps.LocationRect.fromCorners(bound[0], bound[1]);
     var options = {
       center: new Microsoft.Maps.Location(center[0], center[1]),
@@ -373,6 +374,7 @@ function GetMap(bound, el, center, imgSrc) {
       showMapTypeSelector: false,
       showLocateMeButton: false,
       minZoom: 18,
+      maxBounds: maxBounds
     }
     var map = new Microsoft.Maps.Map(el, options);
     //Load the spatial math module which provides useful tile math calculations.    
