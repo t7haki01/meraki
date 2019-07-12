@@ -5,17 +5,39 @@
 <body class="text-center">
 
   <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-
     <main role="main" class="inner cover">
       <h1 class="cover-heading"></h1>
       <p class="lead">
         <i>
-          Thanks to widely available smart devices equipped with WiFi and BLE, <br/>Cisco Meraki’s wireless access points can detect and provide location analytics to report on user foot traffic behavior.
+          "Thanks to widely available smart devices equipped with WiFi and BLE, <br/>Cisco Meraki’s wireless access points can detect and provide location analytics to report on user foot traffic behavior."
+          <sup><a href="https://developer.cisco.com/meraki/scanning-api/#!introduction/scanning-api">(1)</a></sup>
         </i>
       </p>
       <p class="lead">
-        From: <a href="https://developer.cisco.com/meraki/scanning-api/#!introduction/scanning-api">https://developer.cisco.com/meraki/scanning-api/#!introduction/scanning-api</a>
+
       </p>
+      <div class="">
+        Since Oulu University Of Applied Science(OAMK) is customer from Cisco Meraki<sup><a href="https://meraki.cisco.com/customers/higher-education/oulu-university-of-applied-sciences">(2)</a></sup>
+        Cisco Meraki wireless APs, switches and security appliances are deployed in campuses
+        Cisco Meraki devices are connected to the Cisco Meraki cloud over SSL, registered with campus network, and set configurations.
+        As customer, Oulu University Of Applied Science(OAMK) has complete visibility and control over entire network over the web.
+        <sup><a href="https://meraki.cisco.com/products/architecture/">(3)</a></sup>
+      </div>
+
+      <div>
+        Cisco Meraki's Scanning API delivers data in real-time from the Meraki cloud via HTTP POST of JSON data to campus server and saved in Database.
+        It could be used to detect WiFi(associated and non-associated) and Bluetooth Low Energy (BLE) devices in real-time or past(within month).
+        The JSON posts occur frequently, typically batched every minute for each AP.
+        Using the physical placement of the access points from the Map & Floorplan on the Dashboard, the Meraki cloud estimates the location of the client. 
+        The geo-location coordinates (latitude, longitude) and X,Y location data accuracy can vary based on a number of factors. 
+        AP placement, environmental conditions, and client device orientation can influence X,Y estimation;
+        <sup><a href="https://developer.cisco.com/meraki/scanning-api/#!introduction/scanning-api">(1)</a></sup>
+      </div>
     </main>
+    <p>
+      (1): <a href="https://developer.cisco.com/meraki/scanning-api/#!introduction/scanning-api">https://developer.cisco.com/meraki/scanning-api/#!introduction/scanning-api</a><br/>    
+      (2): <a href="https://meraki.cisco.com/customers/higher-education/oulu-university-of-applied-sciences">https://meraki.cisco.com/customers/higher-education/oulu-university-of-applied-sciences</a><br/>
+      (3): <a href="https://meraki.cisco.com/products/architecture/">https://meraki.cisco.com/products/architecture/</a><br/>
+    </p>
   </div>
 </body>

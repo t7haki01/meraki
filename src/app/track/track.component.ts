@@ -29,7 +29,7 @@ export class TrackComponent implements AfterViewInit{
 
   subTitle: string ="Tracked with \"Mac Address\" in Sote Campus";
 
-  description: string ="Check how meraki detected your device";
+  description: string ="Check how meraki detected your device, *Data is only stored for a month";
 
   today = this.getToday();
 
@@ -109,13 +109,15 @@ export class TrackComponent implements AfterViewInit{
         window.alert("Given Mac address length is wrong");
     }
     else{
-      this.date_from = (<HTMLInputElement>document.getElementById("date_from")).value;
-      this.date_to = (<HTMLInputElement>document.getElementById("date_to")).value;
-
-      this.clientMac = macAddress;
-
-      this.trackClicked = true;
-      this.guideOn = false;
+      if(this.validDate()){
+        this.date_from = (<HTMLInputElement>document.getElementById("date_from")).value;
+        this.date_to = (<HTMLInputElement>document.getElementById("date_to")).value;
+  
+        this.clientMac = macAddress;
+  
+        this.trackClicked = true;
+        this.guideOn = false;
+      }
     }
   }
 
@@ -142,6 +144,17 @@ export class TrackComponent implements AfterViewInit{
     this.date_from;
     this.date_to;
   
+  }
+
+  validDate(): boolean{
+    var fromDate = (<HTMLInputElement>document.getElementById("date_from")).value;
+    var toDate = (<HTMLInputElement>document.getElementById("date_to")).value;
+    if(fromDate && toDate){
+      if(fromDate>toDate){
+        return false;
+      }
+    }
+    return true;
   }
 
 }

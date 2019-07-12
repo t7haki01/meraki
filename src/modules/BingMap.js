@@ -128,6 +128,8 @@ export default class BingMap{
 
     pushPins(data, polyLine, map1, map2, map3){
 
+      const minInMs = 60000;
+
       var pushPins1 = [];
       var pushPins2 = [];
       var pushPins3 = [];
@@ -135,13 +137,23 @@ export default class BingMap{
       var polyArray1 = [];
       var polyArray2 = [];
       var polyArray3 = [];
-  
+
+      let interval, curTimeInMs;
+
       for(var i = 0; i < data.length; i++){
         if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
             var loc = new Microsoft.Maps.Location(
             parseFloat(data[i].lat), parseFloat(data[i].lng));
             
             var pin = new Microsoft.Maps.Pushpin(loc);
+
+            if(!interval){
+              interval = new Date(data[i].seenTime).getTime();
+            }
+
+            if(i != 0){
+              curTimeInMs = new Date(data[i].seenTime).getTime();
+            }
           
             if(i===0 && polyLine){
               pin = new Microsoft.Maps.Pushpin(loc,{
@@ -160,7 +172,18 @@ export default class BingMap{
             if(data[i].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || data[i].apFloors == "[\"Kontinkangas-Honka-1krs\"]" 
                 || data[i].apFloors == "[\"Kontinkangas-Paasi-1krs\"]" || data[i].apFloors == "[]"){
                 if(map1){
-                  pushPins1.push(pin);
+                  if(polyLine){
+                    if(interval && curTimeInMs){
+                      if( (curTimeInMs - interval) >= minInMs){
+                        pushPins1.push(pin);
+                        polyArray1.push(loc);
+                        interval = curTimeInMs;
+                      }
+                    }
+                  }
+                  else{
+                    pushPins1.push(pin);
+                  }
                   var infobox1 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
 
                   var pushpin = pin;
@@ -187,14 +210,22 @@ export default class BingMap{
                           visible: true 
                       }); 
                   });
-                  if(polyLine){
-                    polyArray1.push(loc);
-                  }
                 }
             }
             else if(data[i].apFloors == "[\"Kontinkangas-Paasi-2krs\"]" || data[i].apFloors == "[\"Kontinkangas-Louhi-2krs\"]"){
               if(map2){
-                pushPins2.push(pin);
+                if(polyLine){
+                  if(interval && curTimeInMs){
+                    if( (curTimeInMs - interval) >= minInMs){
+                      pushPins2.push(pin);
+                      polyArray2.push(loc);
+                      interval = curTimeInMs;
+                    }
+                  }
+                }
+                else{
+                  pushPins2.push(pin);
+                }
                 var infobox2 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
                 var pushpin = pin;
                 var maker = data[i].manufacturer!=null?data[i].manufacturer:"unknown";
@@ -219,14 +250,22 @@ export default class BingMap{
                         visible: true 
                     }); 
                 });
-                if(polyLine){
-                  polyArray2.push(loc);
-                }
               }
             }
             else if(data[i].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
               if(map3){
-                pushPins3.push(pin);
+                if(polyLine){
+                  if(interval && curTimeInMs){
+                    if( (curTimeInMs - interval) >= minInMs){
+                      pushPins3.push(pin);
+                      polyArray3.push(loc);
+                      interval = curTimeInMs;
+                    }
+                  }
+                }
+                else{
+                  pushPins3.push(pin);
+                }
 
                 var infobox3 = new Microsoft.Maps.Infobox(pin.getLocation(), { visible: false, autoAlignment: true });
                 var pushpin = pin;
@@ -252,14 +291,11 @@ export default class BingMap{
                         visible: true 
                     }); 
                 });
-                if(polyLine){
-                  polyArray3.push(loc);
-                }
               }
             }
         }
       }
-
+      
       if(pushPins1.length>0 && pushPins1[0]){
         var infobox1 = new Microsoft.Maps.Infobox(pushPins1[0].getLocation(), { visible: false, autoAlignment: true });
         infobox1.setMap(map1);
@@ -273,18 +309,29 @@ export default class BingMap{
         infobox3.setMap(map3);
       }
 
-      map1.entities.push(pushPins1);
-      map2.entities.push(pushPins2);
-      map3.entities.push(pushPins3);
+      if(map1 && pushPins1.length>0){
+        map1.entities.push(pushPins1);
+      }
+      if(map2 && pushPins2.length>0){
+        map2.entities.push(pushPins2);
+      }
+      if(map3 && pushPins3.length>0){
+        map3.entities.push(pushPins3);
+      }
 
       if(polyLine){
-        var polyline1 = new Microsoft.Maps.Polyline(polyArray1, null);
-        var polyline2 = new Microsoft.Maps.Polyline(polyArray2, null);
-        var polyline3 = new Microsoft.Maps.Polyline(polyArray3, null);
-
-        map1.entities.push(polyline1);
-        map2.entities.push(polyline2);
-        map3.entities.push(polyline3);
+        if(map1 && polyArray1.length > 0){
+          var polyline1 = new Microsoft.Maps.Polyline(polyArray1, null);
+          map1.entities.push(polyline1);
+        }
+        if(map2 && polyArray2.length > 0){
+          var polyline2 = new Microsoft.Maps.Polyline(polyArray2, null);
+          map2.entities.push(polyline2);
+        }
+        if(map3 && polyArray3.length > 0){
+          var polyline3 = new Microsoft.Maps.Polyline(polyArray3, null);
+          map3.entities.push(polyline3);
+        } 
       }
 
   }

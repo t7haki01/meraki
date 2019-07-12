@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 router.get('/all', function(req, res, next) {
 
-  MongoClient.connect(mongoDb.url, function(err, db){
+  MongoClient.connect(mongoDb.url, {useNewUrlParser: true}, function(err, db){
     if(err){
       console.log(err);
       throw err;
@@ -48,7 +48,7 @@ router.get('/all', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
   
-  MongoClient.connect(mongoDb.url, function(err, db){
+  MongoClient.connect(mongoDb.url, {useNewUrlParser: true}, function(err, db){
     if(err){
       console.log(err);
       throw err;
@@ -107,7 +107,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:clientMac?', function(req, res, next){
-  MongoClient.connect(mongoDb.url, function(err, db){
+  MongoClient.connect(mongoDb.url, {useNewUrlParser: true}, function(err, db){
       if(err){
         console.log(err);
         throw err;
@@ -121,33 +121,24 @@ router.get('/:clientMac?', function(req, res, next){
       }
 
       var query = {};
+      
       if(req.params.clientMac){
         query = {"clientMac":req.params.clientMac};
       }
 
-      if(req.query.date_from && req.query.date_to){
+      if( req.params.clientMac && req.query.date_from && req.query.date_to ){
         let startTime = getDateForQuery(req.query.date_from, 0);
         let endTime = getDateForQuery(req.query.date_to, 1);
- 
-        Object.assign({
+
+        query = {
+          "clientMac":req.params.clientMac,
           "seenTime" : {
             $gte: startTime,
             $lt: endTime,
           }
-        }, query);        
+        };
       }
       
-      else{
-        let startTime = getDateForQuery("", 0);
-        let endTime = getDateForQuery("", 1);
-
-        Object.assign({
-          "seenTime" : {
-            $gte: startTime,
-            $lt: endTime,
-          }
-        }, query);
-      }
       /**
         '-1' for descending order, 
         '1' for ascending order,
@@ -173,7 +164,7 @@ router.get('/:clientMac?', function(req, res, next){
 });
 
 router.get('/lastseen/:clientMac?', function(req, res, next){
-  MongoClient.connect(mongoDb.url, function(err, db){
+  MongoClient.connect(mongoDb.url, {useNewUrlParser: true}, function(err, db){
       if(err){
         console.log(err);
         throw err;
