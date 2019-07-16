@@ -74,7 +74,13 @@ export class MapComponent implements OnInit, OnChanges {
       this.dataService.getByMac(this.clientMac, this.date_from, this.date_to).subscribe((res)=>{
         this.data = res;
         if(this.data.length>0){
-          this.map1.pushPins(this.data, true, this.bingMap1, this.bingMap2, this.bingMap3);
+          var condition1 = "[\"Kontinkangas-Louhi-1krs\"]" + "[\"Kontinkangas-Honka-1krs\"]" + "[\"Kontinkangas-Paasi-1krs\"]" ;
+          var condition2 = "[\"Kontinkangas-Louhi-2krs\"]" + "[\"Kontinkangas-Paasi-2krs\"]";
+          var condition3 = "[\"Kontinkangas-Louhi-3krs\"]";
+          const condition = condition1 + condition2 + condition3 ;
+          if(this.validSoteCampus(this.data, condition)){
+            this.map1.pushPins(this.data, true, this.bingMap1, this.bingMap2, this.bingMap3);
+          }
         }
         else{
           window.alert("No any trace found!");
@@ -105,9 +111,6 @@ export class MapComponent implements OnInit, OnChanges {
         this.data = res;
         if(this.data.length>0){
           this.dataService.getNear(this.clientMac).subscribe((res)=>{
-            var el1 = document.getElementById('myMap1');
-            var el2 = document.getElementById('myMap2');
-            var el3 = document.getElementById('myMap3');
             var apMap;
 
             if(res[0].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || res[0].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"
@@ -125,7 +128,7 @@ export class MapComponent implements OnInit, OnChanges {
               this.map1.nearMap(res, this.data, apMap);
             }
             else{
-              window.alert("no any map found")
+              window.alert("no any trace found")
             }
           })
         }
@@ -183,6 +186,26 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
     this.setData();
+  }
+
+  validSoteCampus(data, cond): boolean{
+    var resultArray = [];
+
+    for(var i = 0; i < data.length ; i++){
+      if(data[i].lat !== "\"NaN\"" && data[i].lng !== "\"NaN\""){
+        if(cond.includes(data[i].apFloors)){
+          resultArray.push(data[i]);
+        }
+      }
+    }
+
+    if(resultArray.length > 0){
+      return true;
+    }
+    else{
+      window.alert("No any trace found from SOTE campus");
+      return false;
+    }
   }
 }
 

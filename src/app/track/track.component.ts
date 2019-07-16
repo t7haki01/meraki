@@ -106,7 +106,7 @@ export class TrackComponent implements AfterViewInit{
     if(lenCheck.length<12){
         console.log(this.date_from);
         console.log(this.date_to);
-        window.alert("Given Mac address length is wrong");
+        window.alert("Given Mac address length is wrong, please take a look one more time!");
     }
     else{
       if(this.validDate()){
@@ -117,6 +117,9 @@ export class TrackComponent implements AfterViewInit{
   
         this.trackClicked = true;
         this.guideOn = false;
+      }
+      else{
+        window.alert("Given Dates are wrong, please take a look one more time!");
       }
     }
   }

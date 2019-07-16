@@ -25,7 +25,7 @@ router.get('/all', function(req, res, next) {
     }
 
     if(req.query.sort){
-      if(sort === parseInt(1)){
+      if( parseInt(req.query.sort) === 1 ){
         var sort = {'seenTime': 1};
       }
       else{

@@ -21,7 +21,7 @@ export class BingMapPComponent implements OnInit {
 
   title: string = "Located by Meraki";
 
-  subTitle: string = "Detected Most recent devices up to 100, Within a minute in Sote Campus"
+  subTitle: string = "Most Recently Detected Devices on SOTE Campus, Up to 100"
 
   constructor() {
     MapLoaderService.load().then( res => {
