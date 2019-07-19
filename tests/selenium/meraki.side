@@ -2,7 +2,7 @@
   "id": "99ba9cf2-466a-4509-b503-2f52e256e09e",
   "version": "2.0",
   "name": "meraki",
-  "url": "http://localhost:8080/index.html",
+  "url": "http://stulinux82.ipt.oamk.fi/",
   "tests": [{
     "id": "24657aa2-352b-4e14-a54e-3d74ea823726",
     "name": "home-browse-click",
@@ -466,7 +466,7 @@
       "id": "021ed6d3-1b81-4bc9-8840-b99456cb4737",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:8080/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -638,7 +638,7 @@
       "id": "34ecfb55-9c31-4878-ba4f-bb9569d0419f",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:8080/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -938,7 +938,7 @@
       "id": "3b645086-4f33-4bc8-9363-ee9467f47ba4",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:8080/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -1170,7 +1170,7 @@
       "id": "26e71735-c852-45b0-ba40-29c42eefd915",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:8080/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -1612,7 +1612,7 @@
       "id": "e21ea924-b95c-4ae0-873e-8f69f4c36db3",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:8080/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -2265,7 +2265,7 @@
       "id": "3f1f2ad7-f1dd-4c2b-b3cc-49e970e9a729",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:8080/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
@@ -2450,7 +2450,7 @@
       "id": "b2549ec5-5a27-47bd-8aef-68efd80bdf67",
       "comment": "",
       "command": "open",
-      "target": "http://localhost:8080/",
+      "target": "/",
       "targets": [],
       "value": ""
     }, {
