@@ -9,10 +9,10 @@ import setting from '../assets/settings.js';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
-  {path: setting.nav.route1, component: AboutComponent},
-  {path: setting.nav.route3, component: TrackComponent},
-  {path: setting.nav.route4, component: HeatComponent},
-  {path: setting.nav.route5, component: NearComponent},
+  {path: "about", component: AboutComponent},
+  {path: "track-device", component: TrackComponent},
+  {path: "heat-map", component: HeatComponent},
+  {path: "find-device", component: NearComponent},
 ];
 
 @NgModule({

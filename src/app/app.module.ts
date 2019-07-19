@@ -39,7 +39,7 @@ import { NearComponent } from './near/near.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule.forRoot(),
+    NgbModule,
     HttpClientModule,
   ],
   providers: [],
