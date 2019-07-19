@@ -108,18 +108,10 @@ export class NearComponent implements AfterViewInit {
   }
 
   goBack(){
-    this.guideOn = true;
     this.data = [];
-    this.checkClicked = false;
-    this.mapReady;
     this.clientMac;
-  
-    this.type = "near";
-  
-    this.imgSrc1 = 'assets/img/sote1_rotated_5_rev_basic.jpg';
-    this.imgSrc2 = 'assets/img/sote2_rotated_2_rev_basic.jpg';
-    this.imgSrc3 = 'assets/img/sote3_rotated_4_rev_basic.jpg';
-    this.isTileLvl = true;
+    this.checkClicked = false;
+    this.guideOn = true;
   }
 
 

@@ -15,7 +15,6 @@ import { MapComponent } from './map/map.component';
 import { HomeComponent } from './home/home.component';
 import { BingMapPComponent } from './bing-map-p/bing-map-p.component';
 import { HeatComponent } from './heat/heat.component';
-import { LoaderComponent } from './loader/loader.component';
 import { NearComponent } from './near/near.component';
 
 @NgModule({
@@ -30,7 +29,6 @@ import { NearComponent } from './near/near.component';
     HomeComponent,
     BingMapPComponent,
     HeatComponent,
-    LoaderComponent,
     NearComponent,
   ],
   entryComponents:[

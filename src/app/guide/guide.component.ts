@@ -102,6 +102,15 @@ export class GuideComponent {
     modalRef.componentInstance.setMaterials({'img': "", 'description': "Or"});
     modalRef.componentInstance.setMaterials({'img': "assets/img/ubuntu-cmd-ipaddr-4.jpg", 'description': "3 - 1. Write \"ip addr | grep ether\" to get filtered information"});
     modalRef.componentInstance.setMaterials({'img': "assets/img/ubuntu-cmd-ipaddr-result-5.jpg", 'description': "3 - 2. Check \"ether\" from result"});
-
+  }
+  searchETC(){
+    var etcDevice = (<HTMLInputElement>document.getElementById("etc")).value ;
+    if(etcDevice && etcDevice.length>0){
+      var googleSearch = "https://www.google.com/search?q=how+to+find+mac+address+" + etcDevice + "&oq=how+to+find+mac+address+" + etcDevice +"&aqs=chrome..69i57j35i39l2j0l3.1595j0j9&sourceid=chrome&ie=UTF-8";
+      window.open(googleSearch, "_blank");
+    }
+    else{
+      window.alert("Please provide \"Key Word\" for wanted device to search \"How to get mac address\"");
+    }
   }
 }

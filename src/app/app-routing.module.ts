@@ -5,7 +5,6 @@ import { AboutComponent } from './about/about.component';
 import { TrackComponent } from './track/track.component';
 import { HeatComponent } from './heat/heat.component';
 import { NearComponent } from './near/near.component';
-import setting from '../assets/settings.js';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},

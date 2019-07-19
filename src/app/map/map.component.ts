@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { DataService } from '../data.service';
 
@@ -13,11 +13,7 @@ const Microsoft: any = null;
   styleUrls: ['./map.component.css']
 })
 
-export class MapComponent implements OnInit, OnChanges {
-
-  el1 = false;
-  el2 = false;
-  el3 = false;
+export class MapComponent implements OnInit {
 
   map1;
   map2;
@@ -51,6 +47,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   apiKey = setting.bing.apiKey;
   private data: any = [];
+  private dataLast: any = [];
 
   constructor(
     private dataService: DataService
@@ -62,9 +59,6 @@ export class MapComponent implements OnInit, OnChanges {
       console.log('BingMapComponent.ngOnInit');
       this.getMap();
     }
-  }
-
-  ngOnChanges(){
   }
 
   setData(){
@@ -111,23 +105,26 @@ export class MapComponent implements OnInit, OnChanges {
         this.data = res;
         if(this.data.length>0){
           this.dataService.getNear(this.clientMac).subscribe((res)=>{
+            this.dataLast = res;
             var apMap;
 
-            if(res[0].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || res[0].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"
-            || res[0].apFloors == "[\"Kontinkangas-Honka-1krs\"]" || res[0].apFloors == "[]"){
-              apMap = this.bingMap1;
+            if(this.dataLast.length>0){
+              if(res[0].apFloors == "[\"Kontinkangas-Louhi-1krs\"]" || res[0].apFloors == "[\"Kontinkangas-Paasi-1krs\"]"
+              || res[0].apFloors == "[\"Kontinkangas-Honka-1krs\"]"){
+                apMap = this.bingMap1;
+              }
+              if(res[0].apFloors == "[\"Kontinkangas-Louhi-2krs\"]" || res[0].apFloors == "[\"Kontinkangas-Paasi-2krs\"]"){
+                apMap = this.bingMap2;
+              }
+              if(res[0].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
+                apMap = this.bingMap3;
+              }
             }
-            if(res[0].apFloors == "[\"Kontinkangas-Louhi-2krs\"]" || res[0].apFloors == "[\"Kontinkangas-Paasi-2krs\"]"){
-              apMap = this.bingMap2;
-            }
-            if(res[0].apFloors == "[\"Kontinkangas-Louhi-3krs\"]"){
-              apMap = this.bingMap3;
-            }
-
             if(apMap){
-              this.map1.nearMap(res, this.data, apMap);
+                this.map1.nearMap(res, this.data, apMap);
             }
-            else{
+            else
+            {
               window.alert("no any trace found")
             }
           })
@@ -135,18 +132,10 @@ export class MapComponent implements OnInit, OnChanges {
       });
     }
 
-
   }
 
   getMap(){
-    /***Init the center point of each maps and overlaying map bound also data */
 
-    // very originally used for it
-    // var latOriginal = 65.0086909, lngOriginal = 25.5115079;    
-    // var plus = 0.0009500, minus = -0.0009000;
-    // var bounds1 = [ latOriginal+plus, lngOriginal+minus*3, latOriginal+minus, lngOriginal+plus ];
-
-    // Here is modified map's properties
     var latMap1 = 65.0086409, lngMap1 = 25.5115079;
     var plusMap1 = 0.0009500, minusMap1 = -0.0009000;
     var boundsMap1 = [ latMap1+plusMap1, lngMap1+minusMap1*3, latMap1+minusMap1, lngMap1+plusMap1 ];
@@ -159,9 +148,6 @@ export class MapComponent implements OnInit, OnChanges {
     var plusMap3 = 0.000800, minusMap3 = -0.0006000;
     var boundsMap3 = [ latMap3+plusMap3, lngMap3+minusMap3*3, latMap3+minusMap3, lngMap3+plusMap3 ];
     
-        
-    /**Modofication values for moving maps bounds with coordinate values */
-
     var center1 = [65.0086909, 25.5106079];
     var center2 = [65.0086909, 25.5103579];
     var center3 = [65.0084509, 25.5101500];

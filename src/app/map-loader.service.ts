@@ -10,7 +10,6 @@ export class MapLoaderService {
     private static promise;
 
     public static load() {
-      // First time 'load' is called?
       if (!MapLoaderService.promise) {
 
           // Make promise to load
