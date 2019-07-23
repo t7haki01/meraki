@@ -19,5 +19,13 @@
         "url": "mongodb url" ,
         "database": "db",
         "collectionName": "col"
+    },
+    "session": {
+        "key1": "some session key1",
+        "key2": "some session key2",
+        "secret": "secret for session",
+        "name": "some name for session",
+        "domain": "application domain for session",
+        "path": "some path for session"
     }
 }
