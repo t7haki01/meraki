@@ -18,7 +18,7 @@ var cors = require('cors');
  * 
  * Remember to get rid of this in production
  */
-app.use(cors());
+// app.use(cors());
 
 
 /**From here. making api secure */
